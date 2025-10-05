@@ -1,0 +1,150 @@
+"use client"
+
+import type React from "react"
+
+import { motion } from "framer-motion"
+import { useInView } from "framer-motion"
+import { useRef, useState } from "react"
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Github, Linkedin, Mail, Send } from "lucide-react"
+
+export default function ContactSection() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  })
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Handle form submission
+    console.log("Form submitted:", formData)
+  }
+
+  return (
+    <section id="contact" className="relative py-32 px-4 mb-16" ref={ref}>
+      <div className="max-w-4xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center glow-text font-mono">Get In Touch</h2>
+          <div className="w-20 h-1 bg-primary mx-auto mb-8 glow-border" />
+          <p className="text-center text-muted-foreground mb-16 text-lg">
+            Have a project in mind? Let's work together to create something amazing.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-12">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <Card className="p-8 bg-card/50 backdrop-blur-sm border-primary/20 glow-border h-full">
+                <h3 className="text-2xl font-bold mb-6 text-foreground font-mono">Contact Information</h3>
+
+                <div className="space-y-6">
+                  <a
+                    href="mailto:your.email@example.com"
+                    className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors group"
+                  >
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                      <Mail className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Email</p>
+                      <p className="font-mono">your.email@example.com</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://github.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors group"
+                  >
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                      <Github className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">GitHub</p>
+                      <p className="font-mono">@yourusername</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://linkedin.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors group"
+                  >
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                      <Linkedin className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">LinkedIn</p>
+                      <p className="font-mono">@yourusername</p>
+                    </div>
+                  </a>
+                </div>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <Card className="p-8 bg-card/50 backdrop-blur-sm border-primary/20 glow-border">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <Input
+                      placeholder="Your Name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="bg-background/50 border-primary/30 focus:border-primary glow-border font-mono"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Input
+                      type="email"
+                      placeholder="Your Email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="bg-background/50 border-primary/30 focus:border-primary glow-border font-mono"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Textarea
+                      placeholder="Your Message"
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      className="bg-background/50 border-primary/30 focus:border-primary glow-border min-h-[150px] font-mono"
+                      required
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-border font-mono"
+                    size="lg"
+                  >
+                    <Send className="w-4 h-4 mr-2" />
+                    Send Message
+                  </Button>
+                </form>
+              </Card>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
