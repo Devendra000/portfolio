@@ -5,18 +5,18 @@ import { useInView } from "framer-motion"
 import { useRef } from "react"
 
 const technologies = [
-  { name: "Laravel", icon: "🔷" },
   { name: "JavaScript", icon: "⚡" },
-  { name: "Python", icon: "🐍" },
+  { name: "TypeScript", icon: "🔷" },
   { name: "React", icon: "⚛️" },
   { name: "Node.js", icon: "🟢" },
-  { name: "Vue.js", icon: "💚" },
-  { name: "MySQL", icon: "🗄️" },
+  { name: "Python", icon: "🐍" },
+  { name: "Next.js", icon: "🚀" },
+  { name: "MongoDB", icon: "🍃" },
   { name: "PostgreSQL", icon: "🐘" },
-  { name: "Redis", icon: "🔴" },
   { name: "Docker", icon: "🐳" },
-  { name: "Git", icon: "📦" },
   { name: "AWS", icon: "☁️" },
+  { name: "Git", icon: "📦" },
+  { name: "Express.js", icon: "🌐" },
 ]
 
 export default function TechStackSection() {
@@ -44,7 +44,7 @@ export default function TechStackSection() {
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 className="relative group"
               >
-                <div className="bg-card/50 backdrop-blur-sm border border-primary/20 rounded-lg p-6 text-center hover:border-primary/50 transition-all duration-300 glow-border">
+                <div className="bg-primary/10 backdrop-blur-sm border border-primary/20 rounded-lg p-6 text-center hover:border-primary/50 transition-all duration-300 group-hover:scale-105">
                   <motion.div
                     className="text-5xl mb-3"
                     animate={{

@@ -6,42 +6,43 @@ import { useRef, useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ExternalLink, Github } from "lucide-react"
+import { getAssetUrl } from "@/lib/utils"
 
 const projects = [
   {
-    title: "E-Commerce Platform",
+    title: "Full-Stack E-Commerce App",
     description:
-      "Full-stack e-commerce solution with Laravel backend and React frontend. Features include payment integration, inventory management, and admin dashboard.",
-    tech: ["Laravel", "React", "MySQL", "Stripe"],
-    image: "/modern-ecommerce-dashboard.png",
-    github: "https://github.com",
+      "Modern e-commerce platform built with React, Node.js, and MongoDB. Features include user authentication, payment processing, real-time inventory, and admin dashboard.",
+    tech: ["React", "Node.js", "MongoDB", "Stripe"],
+    image: "modern-ecommerce-dashboard.png",
+    github: "https://github.com/devendra000",
     demo: "https://demo.com",
   },
   {
-    title: "AI Content Generator",
+    title: "Real-Time Chat Application",
     description:
-      "Python-based AI tool for generating marketing content using GPT models. Includes API integration and custom training capabilities.",
-    tech: ["Python", "FastAPI", "OpenAI", "React"],
-    image: "/ai-content-generator-interface.png",
-    github: "https://github.com",
+      "WebSocket-based chat application with React frontend and Node.js backend. Includes features like rooms, private messaging, file sharing, and user presence indicators.",
+    tech: ["React", "Socket.io", "Node.js", "Redis"],
+    image: "ai-content-generator-interface.png",
+    github: "https://github.com/devendra000",
     demo: "https://demo.com",
   },
   {
-    title: "Real-Time Analytics Dashboard",
+    title: "Data Visualization Dashboard",
     description:
-      "Interactive dashboard for visualizing real-time data streams. Built with Node.js backend and modern charting libraries.",
-    tech: ["Node.js", "React", "D3.js", "WebSocket"],
-    image: "/analytics-dashboard-dark-theme.png",
-    github: "https://github.com",
+      "Interactive analytics dashboard for business metrics visualization. Built with React, D3.js, and Python backend for data processing and API services.",
+    tech: ["React", "D3.js", "Python", "FastAPI"],
+    image: "analytics-dashboard-dark-theme.png",
+    github: "https://github.com/devendra000",
     demo: "https://demo.com",
   },
   {
-    title: "Task Management System",
+    title: "Task Management Platform",
     description:
-      "Collaborative task management platform with real-time updates, team collaboration features, and project tracking.",
-    tech: ["Laravel", "Vue.js", "PostgreSQL", "Redis"],
-    image: "/task-management-kanban.png",
-    github: "https://github.com",
+      "Collaborative project management tool with Kanban boards, team collaboration, real-time updates, and progress tracking. Built with modern web technologies.",
+    tech: ["React", "TypeScript", "Node.js", "PostgreSQL"],
+    image: "task-management-kanban.png",
+    github: "https://github.com/devendra000",
     demo: "https://demo.com",
   },
 ]
@@ -75,7 +76,7 @@ export default function ProjectsSection() {
                 <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-primary/20 hover:border-primary/50 transition-all duration-300 h-full">
                   <div className="relative overflow-hidden group">
                     <img
-                      src={project.image || "/placeholder.svg"}
+                      src={project.image ? getAssetUrl(project.image) : getAssetUrl("placeholder.svg")}
                       alt={project.title}
                       className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
                     />
@@ -92,10 +93,10 @@ export default function ProjectsSection() {
                     <p className="text-muted-foreground mb-4 leading-relaxed">{project.description}</p>
 
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {project.tech.map((tech) => (
+                      {project.tech.map((tech, techIndex) => (
                         <span
                           key={tech}
-                          className="px-3 py-1 text-sm bg-primary/10 text-primary border border-primary/30 rounded-full font-mono"
+                          className="px-3 py-1 text-sm bg-primary/10 text-primary border border-primary/30 rounded-full font-mono transition-all hover:scale-105 hover:bg-primary/15"
                         >
                           {tech}
                         </span>
@@ -106,7 +107,7 @@ export default function ProjectsSection() {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="border-primary/50 text-primary hover:bg-primary/10 bg-transparent"
+                        className="border-primary/50 text-primary hover:bg-primary/10 bg-transparent transition-all hover:scale-105"
                         asChild
                       >
                         <a href={project.github} target="_blank" rel="noopener noreferrer">
@@ -114,7 +115,11 @@ export default function ProjectsSection() {
                           Code
                         </a>
                       </Button>
-                      <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
+                      <Button 
+                        size="sm" 
+                        className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all hover:scale-105" 
+                        asChild
+                      >
                         <a href={project.demo} target="_blank" rel="noopener noreferrer">
                           <ExternalLink className="w-4 h-4 mr-2" />
                           Live Demo

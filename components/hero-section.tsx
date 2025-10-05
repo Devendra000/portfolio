@@ -3,19 +3,22 @@
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react"
+import { getSocialUrls } from "@/lib/utils"
 
 export default function HeroSection() {
+  const socialUrls = getSocialUrls()
+
   return (
     <section className="relative min-h-screen flex items-center justify-center px-4">
       <div className="max-w-6xl mx-auto text-center z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
           <motion.h1
-            className="text-6xl md:text-8xl font-bold mb-6 glow-text font-mono"
+            className="text-6xl md:text-8xl font-bold mb-6 glow-text font-mono text-foreground"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
           >
-            Your Name
+            Devendra Hamal
           </motion.h1>
 
           <motion.div
@@ -24,13 +27,13 @@ export default function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <span className="text-primary glow-text">Software Developer</span>
-            <span className="mx-3 text-primary">•</span>
-            <span className="text-secondary glow-green">Laravel</span>
-            <span className="mx-3 text-primary">•</span>
-            <span className="text-secondary glow-green">JavaScript</span>
-            <span className="mx-3 text-primary">•</span>
-            <span className="text-secondary glow-green">Python</span>
+            <span className="text-primary glow-text">Software Engineer</span>
+            <span className="mx-3 text-muted-foreground">•</span>
+            <span className="text-muted-foreground">Full Stack</span>
+            <span className="mx-3 text-muted-foreground">•</span>
+            <span className="text-muted-foreground">React</span>
+            <span className="mx-3 text-muted-foreground">•</span>
+            <span className="text-muted-foreground">Node.js</span>
           </motion.div>
 
           <motion.p
@@ -39,8 +42,8 @@ export default function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            Crafting elegant solutions through code. Building scalable web applications with modern technologies and
-            best practices.
+            Passionate about creating innovative digital solutions. Specializing in full-stack development with modern 
+            JavaScript technologies, building scalable applications that deliver exceptional user experiences.
           </motion.p>
 
           <motion.div
@@ -51,7 +54,7 @@ export default function HeroSection() {
           >
             <Button
               size="lg"
-              className="glow-border bg-primary text-primary-foreground hover:bg-primary/90 font-mono"
+              className="glow-border bg-primary text-primary-foreground hover:bg-primary/90 font-mono transition-all hover:scale-105"
               onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
             >
               View Projects
@@ -59,7 +62,7 @@ export default function HeroSection() {
             <Button
               size="lg"
               variant="outline"
-              className="glow-border border-primary text-primary hover:bg-primary/10 font-mono bg-transparent"
+              className="glow-border border-primary/50 text-primary hover:bg-primary/10 font-mono bg-transparent transition-all hover:scale-105"
               onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
             >
               Contact Me
@@ -73,24 +76,24 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 1 }}
           >
             <a
-              href="https://github.com"
+              href={socialUrls.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
+              className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110"
             >
               <Github className="w-6 h-6" />
             </a>
             <a
-              href="https://linkedin.com"
+              href={socialUrls.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
+              className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110"
             >
               <Linkedin className="w-6 h-6" />
             </a>
             <a
-              href="mailto:your.email@example.com"
-              className="text-muted-foreground hover:text-primary transition-colors"
+              href={`mailto:${socialUrls.email}`}
+              className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110"
             >
               <Mail className="w-6 h-6" />
             </a>

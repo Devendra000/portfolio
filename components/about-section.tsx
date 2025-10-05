@@ -6,12 +6,12 @@ import { useRef } from "react"
 import { Card } from "@/components/ui/card"
 
 const skills = [
-  { name: "Laravel", level: 95 },
-  { name: "JavaScript", level: 90 },
-  { name: "Python", level: 85 },
-  { name: "React", level: 88 },
-  { name: "Node.js", level: 82 },
-  { name: "MySQL", level: 87 },
+  { name: "JavaScript", level: 95, color: "from-primary/60 to-primary" },
+  { name: "React", level: 92, color: "from-primary/60 to-primary" },
+  { name: "Node.js", level: 88, color: "from-primary/60 to-primary" },
+  { name: "TypeScript", level: 85, color: "from-primary/60 to-primary" },
+  { name: "Python", level: 82, color: "from-primary/60 to-primary" },
+  { name: "MongoDB", level: 87, color: "from-primary/60 to-primary" },
 ]
 
 export default function AboutSection() {
@@ -37,13 +37,13 @@ export default function AboutSection() {
             >
               <Card className="p-8 bg-card/50 backdrop-blur-sm border-primary/20 glow-border">
                 <p className="text-lg leading-relaxed text-muted-foreground mb-6">
-                  I'm a passionate software developer with expertise in building robust, scalable web applications. With
-                  years of experience in Laravel, JavaScript, and Python, I specialize in creating elegant solutions to
-                  complex problems.
+                  I'm Devendra Hamal, a passionate software engineer with expertise in building modern, scalable web applications. 
+                  With extensive experience in JavaScript, React, Node.js, and Python, I specialize in creating innovative solutions 
+                  that bridge the gap between design and functionality.
                 </p>
                 <p className="text-lg leading-relaxed text-muted-foreground">
-                  My approach combines clean code principles with modern development practices, ensuring every project
-                  is maintainable, performant, and user-friendly.
+                  My approach emphasizes clean code, performance optimization, and user-centric design. I'm constantly learning 
+                  and adapting to new technologies to deliver cutting-edge solutions that make a real impact.
                 </p>
               </Card>
             </motion.div>
@@ -60,9 +60,9 @@ export default function AboutSection() {
                     <span className="text-foreground font-mono font-semibold">{skill.name}</span>
                     <span className="text-primary font-mono">{skill.level}%</span>
                   </div>
-                  <div className="h-3 bg-muted rounded-full overflow-hidden">
+                  <div className="h-3 bg-muted rounded-full overflow-hidden relative">
                     <motion.div
-                      className="h-full bg-gradient-to-r from-primary to-secondary glow-border"
+                      className={`h-full bg-gradient-to-r ${skill.color} glow-border rounded-full`}
                       initial={{ width: 0 }}
                       animate={isInView ? { width: `${skill.level}%` } : {}}
                       transition={{ duration: 1, delay: 0.6 + index * 0.1 }}

@@ -10,10 +10,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Github, Linkedin, Mail, Send } from "lucide-react"
+import { getSocialUrls } from "@/lib/utils"
 
 export default function ContactSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const socialUrls = getSocialUrls()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -37,7 +39,7 @@ export default function ContactSection() {
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center glow-text font-mono">Get In Touch</h2>
           <div className="w-20 h-1 bg-primary mx-auto mb-8 glow-border" />
           <p className="text-center text-muted-foreground mb-16 text-lg">
-            Have a project in mind? Let's work together to create something amazing.
+            Interested in collaborating? Let's discuss your project and bring your ideas to life together.
           </p>
 
           <div className="grid md:grid-cols-2 gap-12">
@@ -51,7 +53,7 @@ export default function ContactSection() {
 
                 <div className="space-y-6">
                   <a
-                    href="mailto:your.email@example.com"
+                    href={`mailto:${socialUrls.email}`}
                     className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors group"
                   >
                     <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -59,12 +61,12 @@ export default function ContactSection() {
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">Email</p>
-                      <p className="font-mono">your.email@example.com</p>
+                      <p className="font-mono">{socialUrls.email}</p>
                     </div>
                   </a>
 
                   <a
-                    href="https://github.com"
+                    href={socialUrls.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors group"
@@ -74,12 +76,12 @@ export default function ContactSection() {
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">GitHub</p>
-                      <p className="font-mono">@yourusername</p>
+                      <p className="font-mono">@{socialUrls.github.split('/').pop()}</p>
                     </div>
                   </a>
 
                   <a
-                    href="https://linkedin.com"
+                    href={socialUrls.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors group"
@@ -89,7 +91,7 @@ export default function ContactSection() {
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">LinkedIn</p>
-                      <p className="font-mono">@yourusername</p>
+                      <p className="font-mono">@{socialUrls.linkedin.split('/').pop()}</p>
                     </div>
                   </a>
                 </div>
@@ -133,7 +135,7 @@ export default function ContactSection() {
                   </div>
                   <Button
                     type="submit"
-                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-border font-mono"
+                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-border font-mono transition-all hover:scale-105"
                     size="lg"
                   >
                     <Send className="w-4 h-4 mr-2" />
