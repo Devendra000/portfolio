@@ -1,0 +1,159 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "Full-Stack E-Commerce Platform",
+      "description": "Modern e-commerce platform built with React, Node.js, and MongoDB. Features include user authentication, payment processing with Stripe, real-time inventory management, admin dashboard, and responsive design. Deployed on AWS with CI/CD pipeline.",
+      "longDescription": "A comprehensive e-commerce solution featuring user registration/login, product catalog with search and filtering, shopping cart functionality, secure payment processing, order management, and admin panel for inventory control. Built with modern web technologies and follows best practices for security and performance.",
+      "tech": ["React", "Node.js", "MongoDB", "Express.js", "Stripe", "JWT", "AWS", "Docker"],
+      "image": "ecommerce-platform.webp",
+      "github": "https://github.com/Devendra000/ecommerce-platform",
+      "demo": "https://ecommerce-demo.devendrahamal.com.np",
+      "featured": true,
+      "status": "completed",
+      "startDate": "2024-01-15",
+      "endDate": "2024-04-20",
+      "category": "Full Stack",
+      "highlights": [
+        "Integrated Stripe payment gateway",
+        "Real-time inventory tracking",
+        "Admin dashboard with analytics",
+        "Mobile-responsive design",
+        "AWS deployment with auto-scaling"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Real-Time Chat Application",
+      "description": "WebSocket-based chat application with React frontend and Node.js backend. Features include real-time messaging, private rooms, file sharing, user presence indicators, and message history. Built for scalability with Redis.",
+      "longDescription": "A modern chat application supporting multiple chat rooms, private messaging, file uploads, emoji support, typing indicators, and online/offline status. Uses Socket.io for real-time communication and Redis for session management and message caching.",
+      "tech": ["React", "Socket.io", "Node.js", "Redis", "MongoDB", "Cloudinary", "JWT"],
+      "image": "chat-application.webp",
+      "github": "https://github.com/Devendra000/realtime-chat-app",
+      "demo": "https://chat-demo.devendrahamal.com.np",
+      "featured": true,
+      "status": "completed",
+      "startDate": "2024-05-10",
+      "endDate": "2024-07-15",
+      "category": "Real-time",
+      "highlights": [
+        "Real-time messaging with Socket.io",
+        "File sharing with Cloudinary",
+        "Private and group chat rooms",
+        "User presence indicators",
+        "Message history and search"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Data Visualization Dashboard",
+      "description": "Interactive analytics dashboard for business metrics visualization. Built with React, D3.js, and Python backend using FastAPI. Features real-time data processing, custom charts, and automated reporting with export capabilities.",
+      "longDescription": "A comprehensive business intelligence dashboard that connects to multiple data sources, processes large datasets, and presents insights through interactive charts and graphs. Includes data filtering, custom date ranges, and automated report generation with PDF/Excel export.",
+      "tech": ["React", "D3.js", "Python", "FastAPI", "PostgreSQL", "Pandas", "Chart.js"],
+      "image": "analytics-dashboard.webp",
+      "github": "https://github.com/Devendra000/data-visualization-dashboard",
+      "demo": "https://analytics-demo.devendrahamal.com.np",
+      "featured": true,
+      "status": "completed",
+      "startDate": "2024-02-01",
+      "endDate": "2024-05-30",
+      "category": "Data Science",
+      "highlights": [
+        "Interactive D3.js visualizations",
+        "Real-time data processing",
+        "Multi-source data integration",
+        "Automated report generation",
+        "Custom chart builder"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Task Management Platform",
+      "description": "Collaborative project management tool with Kanban boards, team collaboration features, real-time updates, and progress tracking. Built with React, TypeScript, Node.js, and PostgreSQL for enterprise-level project management.",
+      "longDescription": "A comprehensive project management solution featuring Kanban boards, Gantt charts, team collaboration tools, time tracking, milestone management, and detailed reporting. Supports multiple projects, team roles, and integrates with popular development tools.",
+      "tech": ["React", "TypeScript", "Node.js", "PostgreSQL", "Socket.io", "Docker", "AWS"],
+      "image": "task-management.webp",
+      "github": "https://github.com/Devendra000/task-management-platform",
+      "demo": "https://tasks-demo.devendrahamal.com.np",
+      "featured": true,
+      "status": "completed",
+      "startDate": "2023-09-15",
+      "endDate": "2024-01-10",
+      "category": "Productivity",
+      "highlights": [
+        "Drag-and-drop Kanban boards",
+        "Real-time collaboration",
+        "Time tracking and reporting", 
+        "Team role management",
+        "Integration with Git repositories"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Weather Forecast App",
+      "description": "Modern weather application built with React and TypeScript. Features current weather, 7-day forecasts, location-based weather, weather maps, and severe weather alerts. Uses OpenWeatherMap API with beautiful UI animations.",
+      "longDescription": "A responsive weather application providing accurate weather information with location detection, search functionality, favorite locations, weather maps, and detailed forecasts. Features smooth animations and works offline with cached data.",
+      "tech": ["React", "TypeScript", "OpenWeatherMap API", "PWA", "Service Workers"],
+      "image": "weather-app.webp",
+      "github": "https://github.com/Devendra000/weather-forecast-app",
+      "demo": "https://weather-demo.devendrahamal.com.np",
+      "featured": false,
+      "status": "completed",
+      "startDate": "2024-08-01",
+      "endDate": "2024-09-15",
+      "category": "Mobile",
+      "highlights": [
+        "Progressive Web App (PWA)",
+        "Offline functionality",
+        "Location-based weather",
+        "Interactive weather maps",
+        "Severe weather alerts"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Personal Portfolio Website",
+      "description": "Modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS. Features dark theme, smooth animations with Framer Motion, SEO optimization, and contact form integration.",
+      "longDescription": "A professional portfolio website showcasing projects, skills, and experience. Built with performance in mind, featuring server-side rendering, optimized images, perfect Lighthouse scores, and comprehensive SEO for ranking as top software developer in Nepal.",
+      "tech": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel"],
+      "image": "portfolio-website.webp",
+      "github": "https://github.com/Devendra000/portfolio",
+      "demo": "https://devendrahamal.com.np",
+      "featured": false,
+      "status": "completed",
+      "startDate": "2024-10-01",
+      "endDate": "2024-10-14",
+      "category": "Portfolio",
+      "highlights": [
+        "Perfect Lighthouse scores",
+        "SEO optimized for Nepal market",
+        "Smooth Framer Motion animations",
+        "Responsive design",
+        "Contact form integration"
+      ]
+    }
+  ],
+  "categories": [
+    "All",
+    "Full Stack",
+    "Real-time",
+    "Data Science",
+    "Productivity",
+    "Mobile",
+    "Portfolio"
+  ],
+  "technologies": [
+    "React",
+    "Node.js",
+    "TypeScript",
+    "Python",
+    "MongoDB",
+    "PostgreSQL",
+    "Next.js",
+    "Express.js",
+    "Socket.io",
+    "D3.js",
+    "AWS",
+    "Docker"
+  ]
+}
