@@ -11,7 +11,7 @@ export default function Home() {
       <ParticleBackground />
       <HeroSection />
       <AboutSection />
-      <ProjectsSection />
+      {/* <ProjectsSection /> */}
       <TechStackSection />
       <ContactSection />
     </main>

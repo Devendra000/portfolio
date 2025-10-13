@@ -27,23 +27,23 @@ export default function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <span className="text-primary glow-text">Software Engineer</span>
+            <span className="text-primary glow-text">Top Software Developer Nepal</span>
             <span className="mx-3 text-muted-foreground">•</span>
-            <span className="text-muted-foreground">Full Stack</span>
+            <span className="text-muted-foreground">Full Stack Expert</span>
             <span className="mx-3 text-muted-foreground">•</span>
-            <span className="text-muted-foreground">React</span>
-            <span className="mx-3 text-muted-foreground">•</span>
-            <span className="text-muted-foreground">Node.js</span>
+            <span className="text-muted-foreground">React Specialist</span>
           </motion.div>
 
           <motion.p
-            className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            Passionate about creating innovative digital solutions. Specializing in full-stack development with modern 
-            JavaScript technologies, building scalable applications that deliver exceptional user experiences.
+            <strong>Leading software developer in Nepal</strong> with expertise in modern web technologies. 
+            Delivering innovative software solutions for businesses across Nepal and globally. 
+            Specializing in React, Node.js, Python, and full-stack development with a proven track record 
+            of building scalable applications that drive business growth.
           </motion.p>
 
           <motion.div

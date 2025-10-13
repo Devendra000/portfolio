@@ -37,13 +37,18 @@ export default function AboutSection() {
             >
               <Card className="p-8 bg-card/50 backdrop-blur-sm border-primary/20 glow-border">
                 <p className="text-lg leading-relaxed text-muted-foreground mb-6">
-                  I'm Devendra Hamal, a passionate software engineer with expertise in building modern, scalable web applications. 
-                  With extensive experience in JavaScript, React, Node.js, and Python, I specialize in creating innovative solutions 
-                  that bridge the gap between design and functionality.
+                  I'm Devendra Hamal, a leading <strong>software developer in Nepal</strong> with expertise in building modern, scalable web applications. 
+                  Based in Kathmandu, I've established myself as one of the <strong>top software engineers in Nepal</strong>, specializing in full-stack development with JavaScript, React, Node.js, and Python. I deliver innovative software solutions for clients across Nepal and internationally.
+                </p>
+                <p className="text-lg leading-relaxed text-muted-foreground mb-6">
+                  As an <strong>expert software developer in Nepal</strong>, my approach emphasizes clean code architecture, performance optimization, 
+                  and user-centric design. I've helped numerous businesses in Nepal transform their digital presence through custom web applications, 
+                  e-commerce platforms, and enterprise software solutions.
                 </p>
                 <p className="text-lg leading-relaxed text-muted-foreground">
-                  My approach emphasizes clean code, performance optimization, and user-centric design. I'm constantly learning 
-                  and adapting to new technologies to deliver cutting-edge solutions that make a real impact.
+                  Whether you need a <strong>professional software developer in Nepal</strong> for your startup, enterprise application development, 
+                  or technical consultation, I bring years of experience in modern web technologies and a deep understanding of the Nepali market 
+                  to deliver solutions that drive real business growth.
                 </p>
               </Card>
             </motion.div>
