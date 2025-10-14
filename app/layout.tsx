@@ -125,13 +125,13 @@ export const metadata: Metadata = {
     siteName: 'Devendra Hamal - Expert Software Developer Nepal',
     images: [
       {
-        url: 'https://devendrahamal.com.np/devendra-hamal-software-developer-nepal.webp',
+        url: 'https://devendrahamal.com.np/profile.webp',
         width: 1200,
         height: 630,
         alt: 'Devendra Hamal - Top Software Developer in Nepal',
       },
       {
-        url: 'https://devendrahamal.com.np/nepal-software-development-expert.webp',
+        url: 'https://devendrahamal.com.np/logo.webp',
         width: 800,
         height: 600,
         alt: 'Expert Software Development Services in Nepal by Devendra Hamal',
@@ -145,7 +145,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Devendra Hamal - Top Software Developer Nepal 🇳🇵',
     description: 'Leading software engineer in Nepal. Expert in React, Node.js, Python. Building innovative web solutions for global clients. #SoftwareDeveloper #Nepal #FullStack',
-    images: ['https://devendrahamal.com.np/devendra-hamal-software-developer-nepal.webp'],
+    images: ['https://devendrahamal.com.np/logo.webp'],
     creator: '@devendrahamal_dev',
     site: '@devendrahamal_dev',
   },
@@ -164,7 +164,7 @@ const structuredData = {
       "url": "https://devendrahamal.com.np",
       "image": {
         "@type": "ImageObject",
-        "url": "https://devendrahamal.com.np/devendra-hamal-profile.webp",
+        "url": "https://devendrahamal.com.np/logo.webp",
         "width": 800,
         "height": 800
       },
@@ -298,7 +298,19 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        {children}
+        {/* Skip to content link for accessibility */}
+        <a 
+          href="#main-content" 
+          className="skip-to-content"
+          tabIndex={1}
+        >
+          Skip to main content
+        </a>
+        
+        <main id="main-content" tabIndex={-1}>
+          {children}
+        </main>
+        
         <Analytics />
       </body>
     </html>

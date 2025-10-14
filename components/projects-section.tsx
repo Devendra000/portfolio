@@ -167,7 +167,13 @@ export default function ProjectsSection() {
                         className="border-primary/50 text-primary hover:bg-primary/10 bg-transparent transition-all hover:scale-105"
                         asChild
                       >
-                        <a href={project.github} target="_blank" rel="noopener noreferrer">
+                        <a 
+                          href={project.github} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          aria-label={`View ${project.title} source code on GitHub`}
+                          title="View Source Code"
+                        >
                           <Github className="w-4 h-4 mr-2" />
                           View Code
                         </a>
@@ -177,7 +183,13 @@ export default function ProjectsSection() {
                         className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all hover:scale-105" 
                         asChild
                       >
-                        <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                        <a 
+                          href={project.demo} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          aria-label={`View ${project.title} live demo`}
+                          title="View Live Demo"
+                        >
                           <ExternalLink className="w-4 h-4 mr-2" />
                           Live Demo
                         </a>
@@ -205,7 +217,13 @@ export default function ProjectsSection() {
               className="border-primary/50 text-primary hover:bg-primary/10 bg-transparent transition-all hover:scale-105 font-mono"
               asChild
             >
-              <a href="https://github.com/Devendra000" target="_blank" rel="noopener noreferrer">
+              <a 
+                href="https://github.com/Devendra000" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Visit Devendra Hamal's complete GitHub profile"
+                title="View All GitHub Repositories"
+              >
                 <Github className="w-5 h-5 mr-2" />
                 View GitHub Profile
               </a>

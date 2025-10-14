@@ -7,13 +7,33 @@ import ParticleBackground from "@/components/particle-background"
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-hidden">
+    <>
       <ParticleBackground />
-      <HeroSection />
-      <AboutSection />
-      {/* <ProjectsSection /> */}
-      <TechStackSection />
-      <ContactSection />
-    </main>
+      
+      {/* Hero Section */}
+      <section aria-label="Introduction and welcome">
+        <HeroSection />
+      </section>
+      
+      {/* About Section */}
+      <section aria-label="About and skills">
+        <AboutSection />
+      </section>
+      
+      {/* Projects Portfolio */}
+      {/* <section aria-label="Portfolio projects">
+        <ProjectsSection />
+      </section> */}
+      
+      {/* Technology Stack */}
+      <section aria-label="Technical skills and tools">
+        <TechStackSection />
+      </section>
+      
+      {/* Contact Information */}
+      <section aria-label="Contact information and form">
+        <ContactSection />
+      </section>
+    </>
   )
 }

@@ -54,16 +54,18 @@ export default function HeroSection() {
           >
             <Button
               size="lg"
-              className="glow-border bg-primary text-primary-foreground hover:bg-primary/90 font-mono transition-all hover:scale-105"
+              className="glow-border bg-primary text-primary-foreground hover:bg-primary/90 font-mono transition-all hover:scale-105 focus:ring-2 focus:ring-primary focus:ring-offset-2"
               onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+              aria-label="View my portfolio projects"
             >
               View Projects
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="glow-border border-primary/50 text-primary hover:bg-primary/10 font-mono bg-transparent transition-all hover:scale-105"
+              className="glow-border border-primary/50 text-primary hover:bg-primary/10 font-mono bg-transparent transition-all hover:scale-105 focus:ring-2 focus:ring-primary focus:ring-offset-2"
               onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              aria-label="Go to contact section"
             >
               Contact Me
             </Button>
@@ -80,22 +82,31 @@ export default function HeroSection() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110"
+              aria-label="Visit Devendra Hamal's GitHub profile"
+              title="GitHub Profile"
             >
               <Github className="w-6 h-6" />
+              <span className="sr-only">GitHub Profile</span>
             </a>
             <a
               href={socialUrls.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110"
+              aria-label="Connect with Devendra Hamal on LinkedIn"
+              title="LinkedIn Profile"
             >
               <Linkedin className="w-6 h-6" />
+              <span className="sr-only">LinkedIn Profile</span>
             </a>
             <a
               href={`mailto:${socialUrls.email}`}
               className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110"
+              aria-label="Send email to Devendra Hamal"
+              title="Send Email"
             >
               <Mail className="w-6 h-6" />
+              <span className="sr-only">Send Email</span>
             </a>
           </motion.div>
         </motion.div>
