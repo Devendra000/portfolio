@@ -5,8 +5,8 @@ import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Devendra Hamal - Top Software Developer in Nepal | Expert Full Stack Engineer',
-  description: 'Devendra Hamal is a leading software developer in Nepal specializing in modern web technologies. Expert in React, Node.js, Python, and cloud computing. Delivering innovative software solutions across Nepal and globally. Contact the best software engineer in Nepal for your next project.',
+  title: 'Devendra Hamal - Top Software Developer Nepal | Full Stack Expert',
+  description: 'Leading software developer in Nepal. Expert in React, Node.js, Python & cloud computing. Delivering innovative solutions globally.',
   keywords: [
     // Primary SEO targets
     'best software developer Nepal',
