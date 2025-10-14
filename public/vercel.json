@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://devendrahamal.com.np/$1",
+      "permanent": true
+    }
+  ]
+}
