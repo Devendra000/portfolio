@@ -5,5 +5,11 @@
       "destination": "https://devendrahamal.com.np/$1",
       "permanent": true
     }
+  ],
+  "routes": [
+    { "src": "/index.php", "status": 404 },
+    { "src": "/login", "status": 404 },
+    { "src": "/signup", "status": 404 },
+    { "src": "/privacy-policy", "status": 404 }
   ]
 }
