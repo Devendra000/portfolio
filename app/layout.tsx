@@ -289,10 +289,11 @@ export default function RootLayout({
         <meta name="google-site-verification" content="your-google-verification-code" />
         <meta name="msvalidate.01" content="your-bing-verification-code" />
         
-        {/* Theme and Manifest */}
-        <meta name="theme-color" content="#1a1a1a" />
-        <link rel="manifest" href="/manifest.json" />
-        
+  {/* Theme and Manifest */}
+  <meta name="theme-color" content="#1a1a1a" />
+  <link rel="manifest" href="/manifest.json" />
+    {/* Favicons */}
+    <link rel="icon" href="/favicon.ico" />        
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
