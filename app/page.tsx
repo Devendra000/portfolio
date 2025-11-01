@@ -21,9 +21,9 @@ export default function Home() {
       </section>
       
       {/* Projects Portfolio */}
-      {/* <section aria-label="Portfolio projects">
+      <section aria-label="Portfolio projects">
         <ProjectsSection />
-      </section> */}
+      </section>
       
       {/* Technology Stack */}
       <section aria-label="Technical skills and tools">

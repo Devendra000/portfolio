@@ -6,7 +6,7 @@ import { useRef, useState, useEffect } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { ExternalLink, Github, Calendar, Star } from "lucide-react"
+import { ExternalLink, Github, Calendar, Star, ChevronLeft, ChevronRight } from "lucide-react"
 import { getAssetUrl } from "@/lib/utils"
 import projectsData from "@/data/projects.json"
 
@@ -17,10 +17,12 @@ interface Project {
   longDescription: string
   tech: string[]
   image: string
+  images?: string[]
   github: string
   demo: string
   featured: boolean
   status: string
+  visible: boolean
   startDate: string
   endDate: string
   category: string
@@ -33,14 +35,29 @@ export default function ProjectsSection() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<string>("All")
   const [projects, setProjects] = useState<Project[]>([])
+  const [currentImageIndex, setCurrentImageIndex] = useState<{ [key: number]: number }>({})
 
   useEffect(() => {
     setProjects(projectsData.projects as Project[])
   }, [])
 
+  const handlePrevImage = (projectId: number, totalImages: number) => {
+    setCurrentImageIndex(prev => ({
+      ...prev,
+      [projectId]: ((prev[projectId] || 0) - 1 + totalImages) % totalImages
+    }))
+  }
+
+  const handleNextImage = (projectId: number, totalImages: number) => {
+    setCurrentImageIndex(prev => ({
+      ...prev,
+      [projectId]: ((prev[projectId] || 0) + 1) % totalImages
+    }))
+  }
+
   const filteredProjects = selectedCategory === "All" 
-    ? projects.filter(project => project.featured)
-    : projects.filter(project => project.category === selectedCategory)
+    ? projects.filter(project => project.featured && project.visible !== false)
+    : projects.filter(project => project.category === selectedCategory && project.visible !== false)
 
   const categories = projectsData.categories
 
@@ -90,11 +107,59 @@ export default function ProjectsSection() {
               >
                 <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-primary/20 hover:border-primary/50 transition-all duration-300 h-full group">
                   <div className="relative overflow-hidden">
-                    <img
-                      src={project.image ? getAssetUrl(project.image) : getAssetUrl("placeholder.svg")}
-                      alt={project.title}
-                      className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
+                    {/* Image Carousel */}
+                    {project.images && project.images.length > 0 ? (
+                      <div className="relative group/carousel">
+                        <img
+                          src={project.images[currentImageIndex[project.id] || 0] ? getAssetUrl(project.images[currentImageIndex[project.id] || 0]) : getAssetUrl("placeholder.svg")}
+                          alt={`${project.title} - Image ${(currentImageIndex[project.id] || 0) + 1}`}
+                          className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                        
+                        {/* Navigation Buttons */}
+                        {project.images.length > 1 && (
+                          <>
+                            <button
+                              onClick={() => handlePrevImage(project.id, project.images!.length)}
+                              className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background text-foreground p-2 rounded-full opacity-0 group-hover/carousel:opacity-100 transition-opacity z-10"
+                              aria-label="Previous image"
+                            >
+                              <ChevronLeft className="w-5 h-5" />
+                            </button>
+                            <button
+                              onClick={() => handleNextImage(project.id, project.images!.length)}
+                              className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background text-foreground p-2 rounded-full opacity-0 group-hover/carousel:opacity-100 transition-opacity z-10"
+                              aria-label="Next image"
+                            >
+                              <ChevronRight className="w-5 h-5" />
+                            </button>
+                            
+                            {/* Dots Indicator */}
+                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                              {project.images.map((_, idx) => (
+                                <button
+                                  key={idx}
+                                  onClick={() => setCurrentImageIndex(prev => ({ ...prev, [project.id]: idx }))}
+                                  className={`w-2 h-2 rounded-full transition-all ${
+                                    (currentImageIndex[project.id] || 0) === idx 
+                                      ? "bg-primary w-6" 
+                                      : "bg-primary/40 hover:bg-primary/60"
+                                  }`}
+                                  aria-label={`Go to image ${idx + 1}`}
+                                />
+                              ))}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    ) : (
+                      <img
+                        src={project.image ? getAssetUrl(project.image) : getAssetUrl("placeholder.svg")}
+                        alt={project.title}
+                        className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    )}
+                    
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"
                       initial={{ opacity: 0.5 }}
@@ -103,7 +168,7 @@ export default function ProjectsSection() {
                     />
                     
                     {/* Status Badge */}
-                    <div className="absolute top-4 left-4">
+                    <div className="absolute top-4 left-4 z-20">
                       <Badge 
                         variant={project.status === "completed" ? "default" : "secondary"}
                         className="bg-primary/20 text-primary border-primary/50 backdrop-blur-sm"
@@ -114,7 +179,7 @@ export default function ProjectsSection() {
                     </div>
 
                     {/* Category Badge */}
-                    <div className="absolute top-4 right-4">
+                    <div className="absolute top-4 right-4 z-20">
                       <Badge variant="outline" className="bg-background/20 backdrop-blur-sm">
                         {project.category}
                       </Badge>
