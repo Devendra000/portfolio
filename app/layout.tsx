@@ -104,6 +104,7 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
@@ -288,6 +289,8 @@ export default function RootLayout({
         {/* Verification Tags */}
         <meta name="google-site-verification" content="your-google-verification-code" />
         <meta name="msvalidate.01" content="your-bing-verification-code" />
+        <meta name="yandex-verification" content="your-yandex-verification-code" />
+        <meta name="alexaVerifyID" content="your-alexa-verification-code" />
         
   {/* Theme and Manifest */}
   <meta name="theme-color" content="#1a1a1a" />
