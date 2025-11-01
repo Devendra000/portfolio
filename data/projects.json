@@ -75,11 +75,11 @@
       "description": "A comprehensive project management platform designed to streamline development workflows and enhance team collaboration. Eliminates the need for 3+ separate tools by providing unified project tracking, real-time notifications, and intelligent task routing in a single platform.",
       "longDescription": "DevCodes solves the problem of fragmented project management tools by delivering a unified platform with real-time capabilities and intelligent automation. Built with Next.js 14 App Router and Supabase, it features WebSocket-based notifications with custom sounds, automatic task delegation, middleware-based security, and mobile-optimized UI. Key capabilities include multi-role invitation system, CSV import/export, project cloning, bulk operations, and client-side pagination. The platform reduces context switching and delivers <100ms notification latency for seamless team collaboration.",
       "tech": ["Next.js", "React", "TypeScript", "Supabase", "PostgreSQL", "Tailwind CSS"],
-      "image": "https://pm.devendrahamal.com.np/kanban-board-features.png&width=800&height=600",
+      "image": "https://devendrahamal.com.np/kanban-board-features.png&width=800&height=600",
       "images": [
-        "https://pm.devendrahamal.com.np/landing-page.png&width=800&height=600",
-        "https://pm.devendrahamal.com.np/dashboard.png&width=800&height=600",
-        "https://pm.devendrahamal.com.np/kanban-board-features.png&width=800&height=600"
+        "https://devendrahamal.com.np/landing-page.png&width=800&height=600",
+        "https://devendrahamal.com.np/dashboard.png&width=800&height=600",
+        "https://devendrahamal.com.np/kanban-board-features.png&width=800&height=600"
       ],
       "github": "https://github.com/Devendra000/dev-codes-pm",
       "demo": "https://pm.devendrahamal.com.np",
