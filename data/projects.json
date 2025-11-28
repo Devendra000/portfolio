@@ -102,6 +102,36 @@
     },
     {
       "id": 5,
+      "title": "Dev QR - Free QR Code Generator",
+      "description": "A free, fast, and intuitive QR code generator supporting both static and customizable QR codes. Generate professional QR codes with custom colors, logos, and branding in seconds. Perfect for marketing, product packaging, and digital campaigns.",
+      "longDescription": "Dev QR provides a seamless experience for generating high-quality QR codes with extensive customization options. Users can create static QR codes instantly or design branded, customizable QR codes with custom colors, patterns, and embedded logos. The platform features real-time preview, multiple export formats, and an intuitive interface suitable for businesses, marketers, and individual users. Built for performance and accessibility, Dev QR generates error-corrected QR codes following international standards with support for various data types including URLs, text, contact information, and more.",
+      "tech": ["Next.js 16", "React 19", "TypeScript 5", "Tailwind CSS 4", "qrcode.react", "html2canvas", "Nodemailer", "Vercel KV", "PostCSS"],
+      "image": "/projects/qr/qr-generator-1.webp",
+      "images": [
+        "/projects/qr/qr-generator-1.webp",
+        "/projects/qr/qr-generator-2.webp"
+      ],
+      "github": "https://github.com/Devendra000/dev-qr",
+      "demo": "https://www.generateqr.tech",
+      "featured": true,
+      "status": "completed",
+      "visible": true,
+      "startDate": "2024-11-01",
+      "endDate": "2024-11-15",
+      "category": "Full Stack",
+      "highlights": [
+        "Free static and customizable QR code generation",
+        "Real-time preview with instant updates",
+        "Custom colors, patterns, and logo embedding",
+        "Multiple export formats (PNG, SVG, PDF)",
+        "Error correction and data validation",
+        "Mobile-responsive interface",
+        "No sign-up required for basic features",
+        "High-performance generation engine"
+      ]
+    },
+    {
+      "id": 6,
       "title": "Weather Forecast App",
       "description": "Modern weather application built with React and TypeScript. Features current weather, 7-day forecasts, location-based weather, weather maps, and severe weather alerts. Uses OpenWeatherMap API with beautiful UI animations.",
       "longDescription": "A responsive weather application providing accurate weather information with location detection, search functionality, favorite locations, weather maps, and detailed forecasts. Features smooth animations and works offline with cached data.",
@@ -124,7 +154,7 @@
       ]
     },
     {
-      "id": 6,
+      "id": 7,
       "title": "Personal Portfolio Website",
       "description": "Modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS. Features dark theme, smooth animations with Framer Motion, SEO optimization, and contact form integration.",
       "longDescription": "A professional portfolio website showcasing projects, skills, and experience. Built with performance in mind, featuring server-side rendering, optimized images, perfect Lighthouse scores, and comprehensive SEO for ranking as top software developer in Nepal.",
@@ -169,6 +199,12 @@
     "Socket.io",
     "D3.js",
     "AWS",
-    "Docker"
+    "Docker",
+    "Tailwind CSS",
+    "qrcode.react",
+    "html2canvas",
+    "Nodemailer",
+    "Vercel KV",
+    "PostCSS"
   ]
 }

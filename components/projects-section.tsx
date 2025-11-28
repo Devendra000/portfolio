@@ -97,21 +97,28 @@ export default function ProjectsSection() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {filteredProjects.map((project, index) => (
-              <motion.div
+              <a 
                 key={project.id}
-                initial={{ opacity: 0, y: 50 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                onHoverStart={() => setHoveredIndex(index)}
-                onHoverEnd={() => setHoveredIndex(null)}
+                href={project.demo} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block"
+                aria-label={`View ${project.title} live demo`}
               >
-                <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-primary/20 hover:border-primary/50 transition-all duration-300 h-full group">
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  onHoverStart={() => setHoveredIndex(index)}
+                  onHoverEnd={() => setHoveredIndex(null)}
+                >
+                  <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-primary/20 hover:border-primary/50 transition-all duration-300 h-full group cursor-pointer">
                   <div className="relative overflow-hidden">
                     {/* Image Carousel */}
                     {project.images && project.images.length > 0 ? (
                       <div className="relative group/carousel">
                         <img
-                          src={project.images[currentImageIndex[project.id] || 0] ? getAssetUrl(project.images[currentImageIndex[project.id] || 0]) : getAssetUrl("placeholder.svg")}
+                          src={project.images[currentImageIndex[project.id] || 0] || "placeholder.svg"}
                           alt={`${project.title} - Image ${(currentImageIndex[project.id] || 0) + 1}`}
                           className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
                         />
@@ -226,43 +233,21 @@ export default function ProjectsSection() {
                     </div>
 
                     <div className="flex gap-4">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="border-primary/50 text-primary hover:bg-primary/10 bg-transparent transition-all hover:scale-105"
-                        asChild
-                      >
-                        <a 
-                          href={project.github} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          aria-label={`View ${project.title} source code on GitHub`}
-                          title="View Source Code"
-                        >
-                          <Github className="w-4 h-4 mr-2" />
-                          View Code
-                        </a>
-                      </Button>
                       <Button 
                         size="sm" 
-                        className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all hover:scale-105" 
+                        className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all hover:scale-105 w-full" 
                         asChild
                       >
-                        <a 
-                          href={project.demo} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          aria-label={`View ${project.title} live demo`}
-                          title="View Live Demo"
-                        >
+                        <span className="cursor-pointer">
                           <ExternalLink className="w-4 h-4 mr-2" />
-                          Live Demo
-                        </a>
+                          View Demo
+                        </span>
                       </Button>
                     </div>
                   </div>
                 </Card>
-              </motion.div>
+                </motion.div>
+              </a>
             ))}
           </div>
 
