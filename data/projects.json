@@ -102,9 +102,9 @@
     },
     {
       "id": 5,
-      "title": "Dev QR - Free QR Code Generator",
+      "title": "DevQR - Free QR Code Generator",
       "description": "A free, fast, and intuitive QR code generator supporting both static and customizable QR codes. Generate professional QR codes with custom colors, logos, and branding in seconds. Perfect for marketing, product packaging, and digital campaigns.",
-      "longDescription": "Dev QR provides a seamless experience for generating high-quality QR codes with extensive customization options. Users can create static QR codes instantly or design branded, customizable QR codes with custom colors, patterns, and embedded logos. The platform features real-time preview, multiple export formats, and an intuitive interface suitable for businesses, marketers, and individual users. Built for performance and accessibility, Dev QR generates error-corrected QR codes following international standards with support for various data types including URLs, text, contact information, and more.",
+      "longDescription": "DevQR provides a seamless experience for generating high-quality QR codes with extensive customization options. Users can create static QR codes instantly or design branded, customizable QR codes with custom colors, patterns, and embedded logos. The platform features real-time preview, multiple export formats, and an intuitive interface suitable for businesses, marketers, and individual users. Built for performance and accessibility, DevQR generates error-corrected QR codes following international standards with support for various data types including URLs, text, contact information, and more.",
       "tech": ["Next.js 16", "React 19", "TypeScript 5", "Tailwind CSS 4", "qrcode.react", "html2canvas", "Nodemailer", "Vercel KV", "PostCSS"],
       "image": "/projects/qr/qr-generator-1.webp",
       "images": [
