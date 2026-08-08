@@ -8,6 +8,7 @@ import { Projects } from '@/components/sections/projects'
 import { Contact } from '@/components/sections/contact'
 import { LeftPanel } from '@/components/layout/left-panel'
 import { RightPanel } from '@/components/layout/right-panel'
+import { MusicPlayer } from '@/components/music-player'
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState('about')
@@ -44,21 +45,22 @@ export default function Home() {
   if (!isMounted) return null
 
   return (
-    <main className="min-h-screen w-full flex gap-0" style={{ backgroundColor: 'var(--terminal-bg)' }}>
+    <main className="md:h-screen min-h-screen w-full flex flex-col md:flex-row gap-0" style={{ backgroundColor: 'var(--terminal-bg)' }}>
       {/* Left Panel */}
-      <div className="w-48 border-r" style={{ borderColor: 'var(--terminal-border)' }}>
+      <div className="w-full md:w-48 border-b md:border-b-0 md:border-r shrink-0" style={{ borderColor: 'var(--terminal-border)' }}>
         <LeftPanel activeSection={activeSection} onSectionChange={handleSectionChange} />
       </div>
 
       {/* Center Terminal */}
-      <div className="flex-1 flex p-4 md:p-8 border-r" style={{ borderColor: 'var(--terminal-border)' }}>
+      <div className="flex-1 flex flex-col p-4 md:p-8 border-b md:border-b-0 border-r-0 md:border-r min-w-0" style={{ borderColor: 'var(--terminal-border)' }}>
         <TerminalWindow>
           {renderContent()}
         </TerminalWindow>
+        <MusicPlayer />
       </div>
 
       {/* Right Panel */}
-      <div className="w-48 hidden lg:block">
+      <div className="w-full md:w-48 shrink-0">
         <RightPanel />
       </div>
     </main>

@@ -183,3 +183,14 @@
   --terminal-yellow: #ffbd2e;
   --terminal-green: #28c840;
 }
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+

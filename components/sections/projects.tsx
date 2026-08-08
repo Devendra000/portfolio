@@ -7,19 +7,21 @@ export function Projects() {
   const [showContent, setShowContent] = useState(false)
 
   const projects = [
-    {
-      name: 'TalentCapture',
-      description: 'AI-powered recruitment platform',
-      fullDescription: 'An intelligent recruitment platform leveraging AI to screen candidates, analyze resumes, and match them with job opportunities.',
-      stack: ['PHP', 'Laravel', 'AWS Bedrock', 'PostgreSQL', 'React'],
-      role: 'Full-stack development • AI integration • Database architecture',
-    },
+    // {
+    //   name: 'TalentCapture',
+    //   description: 'AI-powered recruitment platform',
+    //   fullDescription: 'An intelligent recruitment platform leveraging AI to screen candidates, analyze resumes, and match them with job opportunities.',
+    //   stack: ['PHP', 'Laravel', 'AWS Bedrock', 'PostgreSQL', 'React'],
+    //   role: 'Full-stack development • AI integration • Database architecture',
+    //   link: 'https://github.com/devendrahamal',
+    // },
     {
       name: 'PrepMate',
       description: 'LMS with Prisma + Next.js',
       fullDescription: 'A comprehensive Learning Management System for course creation, student management, and progress tracking.',
       stack: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Tailwind CSS'],
       role: 'Full-stack development • Database modeling • API design',
+      link: 'https://www.prepmate.tech',
     },
     {
       name: 'ChatMandu',
@@ -27,14 +29,16 @@ export function Projects() {
       fullDescription: 'A platform integrating WhatsApp messaging for automated customer support and business communication.',
       stack: ['NestJS', 'TypeScript', 'WhatsApp API', 'Redis', 'PostgreSQL'],
       role: 'Backend development • API integration • Message queue architecture',
+      link: 'https://www.chatmandu.tech',
     },
-    {
-      name: 'EduFlow',
-      description: 'Educational content management',
-      fullDescription: 'Educational platform for managing and delivering online courses with interactive content.',
-      stack: ['Laravel', 'React', 'PostgreSQL', 'Redis', 'AWS'],
-      role: 'Full-stack development • Content delivery • Performance optimization',
-    },
+    // {
+    //   name: 'EduFlow',
+    //   description: 'Educational content management',
+    //   fullDescription: 'Educational platform for managing and delivering online courses with interactive content.',
+    //   stack: ['Laravel', 'React', 'PostgreSQL', 'Redis', 'AWS'],
+    //   role: 'Full-stack development • Content delivery • Performance optimization',
+    //   link: 'https://github.com/devendrahamal',
+    // },
   ]
 
   const handleProjectClick = (projectName: string) => {
@@ -109,6 +113,28 @@ export function Projects() {
                       </div>
                       <div style={{ color: 'var(--terminal-muted)' }} className="mt-1">
                         {project.role}
+                      </div>
+                    </div>
+
+                    <div>
+                      <div style={{ color: 'var(--terminal-prompt)' }} className="font-medium">
+                        Link:
+                      </div>
+                      <div className="mt-1">
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline flex items-center gap-1 w-fit"
+                          style={{ color: 'var(--terminal-highlight)' }}
+                        >
+                          View Project
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                          </svg>
+                        </a>
                       </div>
                     </div>
                   </div>

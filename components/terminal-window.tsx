@@ -4,7 +4,7 @@ import React from 'react'
 
 export function TerminalWindow({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full h-full max-w-5xl mx-auto">
+    <div className="w-full flex-1 max-w-5xl mx-auto flex flex-col min-h-0">
       {/* Terminal Window Container */}
       <div 
         className="rounded-lg overflow-hidden shadow-2xl h-full flex flex-col"
