@@ -134,7 +134,7 @@ export function MusicPlayer() {
 
         {/* Playback Controls */}
         <div className="flex items-center justify-center gap-6 md:gap-4 shrink-0 w-full md:w-auto">
-          <button onClick={handlePrev} className="hover:text-white transition-colors opacity-80 hover:opacity-100">
+          <button aria-label="Previous track" onClick={handlePrev} className="hover:text-white transition-colors opacity-80 hover:opacity-100">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
               <polygon points="19 20 9 12 19 4 19 20" />
               <rect x="5" y="4" width="2" height="16" />
@@ -142,6 +142,7 @@ export function MusicPlayer() {
           </button>
 
           <button
+            aria-label={isPlaying ? "Pause track" : "Play track"}
             onClick={togglePlay}
             className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 transition-colors border shrink-0"
             style={{ borderColor: 'var(--terminal-border)' }}
@@ -158,7 +159,7 @@ export function MusicPlayer() {
             )}
           </button>
 
-          <button onClick={handleNext} className="hover:text-white transition-colors opacity-80 hover:opacity-100">
+          <button aria-label="Next track" onClick={handleNext} className="hover:text-white transition-colors opacity-80 hover:opacity-100">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
               <polygon points="5 4 15 12 5 20 5 4" />
               <rect x="17" y="4" width="2" height="16" />

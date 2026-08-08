@@ -11,9 +11,9 @@ export function Whoami() {
 
       {/* Output */}
       <div className="pl-0 space-y-1">
-        <div className="text-2xl font-bold" style={{ color: 'var(--terminal-name)' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--terminal-name)' }}>
           Devendra Hamal
-        </div>
+        </h1>
         <div style={{ color: 'var(--terminal-prompt)' }} className="text-sm">
           Full-Stack Developer · Kathmandu, Nepal
         </div>

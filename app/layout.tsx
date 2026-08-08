@@ -9,8 +9,48 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Devendra Hamal | Full-Stack Developer',
-  description: 'Full-Stack Developer portfolio · PHP, Laravel, Next.js, NestJS, AWS',
+  title: {
+    default: 'Devendra Hamal | Full-Stack Developer',
+    template: '%s | Devendra Hamal'
+  },
+  description: 'Full-Stack Developer from Kathmandu, Nepal. Specialized in PHP, Laravel, Next.js, NestJS, and AWS. View my portfolio, projects, and skills.',
+  keywords: ['Devendra Hamal', 'Full-Stack Developer', 'Laravel Developer', 'Next.js Developer', 'NestJS Developer', 'Kathmandu', 'Nepal', 'Software Engineer', 'Web Developer'],
+  authors: [{ name: 'Devendra Hamal', url: 'https://github.com/devendra000' }],
+  creator: 'Devendra Hamal',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://www.devendrahamal.com.np',
+    title: 'Devendra Hamal | Full-Stack Developer',
+    description: 'Full-Stack Developer from Kathmandu, Nepal specializing in modern web technologies.',
+    siteName: 'Devendra Hamal Portfolio',
+    images: [
+      {
+        url: '/icon.png',
+        width: 800,
+        height: 600,
+        alt: 'Devendra Hamal Portfolio',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Devendra Hamal | Full-Stack Developer',
+    description: 'Full-Stack Developer from Kathmandu, Nepal specializing in modern web technologies.',
+    creator: '@Devendra058',
+    images: ['/icon.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   icons: {
     icon: [
       { url: '/favicon.ico' },
