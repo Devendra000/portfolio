@@ -11,7 +11,6 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: 'Devendra Hamal | Full-Stack Developer',
   description: 'Full-Stack Developer portfolio · PHP, Laravel, Next.js, NestJS, AWS',
-  generator: 'v0.app',
   icons: {
     icon: [
       {
