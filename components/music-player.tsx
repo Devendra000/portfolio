@@ -2,12 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-// Hidden player: nothing renders until the secret shortcut is pressed.
-// Alt+Shift+M shows it and toggles play/pause; × hides it again.
-// (Win/Cmd+M can't be used — the OS takes it before the browser sees it.)
-function isShortcut(e: KeyboardEvent) {
-  return e.altKey && e.shiftKey && !e.ctrlKey && !e.metaKey && e.code === 'KeyM'
-}
+// Hidden player: nothing renders until someone types `play music` in the
+// terminal (lib/terminal/commands.ts), which fires a `play-music` event.
+// `stop music` (a `stop-music` event) or × pauses and hides it again.
 
 const title = (file: string) => file.replace(/\.[^.]+$/, '')
 
@@ -39,15 +36,21 @@ export function MusicPlayer() {
   const pause = () => audioRef.current?.pause()
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (!isShortcut(e) || playlist.length === 0) return
-      e.preventDefault()
+    const onPlay = () => {
+      if (playlist.length === 0) return
       setVisible(true)
-      if (audioRef.current?.paused) play()
-      else pause()
+      play()
     }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    const onStop = () => {
+      audioRef.current?.pause()
+      setVisible(false)
+    }
+    window.addEventListener('play-music', onPlay)
+    window.addEventListener('stop-music', onStop)
+    return () => {
+      window.removeEventListener('play-music', onPlay)
+      window.removeEventListener('stop-music', onStop)
+    }
   }, [playlist.length])
 
   // Keep playing when the track changes via next/prev/ended.

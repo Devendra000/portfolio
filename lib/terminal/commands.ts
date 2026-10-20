@@ -1190,3 +1190,28 @@ def('cd..', { help: '', hidden: true, run: (ctx) => commands.cd.run({ ...ctx, ar
 def('please', { help: '', hidden: true, run: ({ out }) => out('Since you asked nicely: still no root. But here’s a cookie 🍪') })
 def('coffee', { help: '', hidden: true, run: ({ out }) => out('☕  brewing… coffee-daemon (pid 777) is already on it.') })
 def('hello', { help: '', hidden: true, run: ({ out }) => out('Hello! Type `help` to look around, or `hire` to say hi properly.') })
+// Secret: `play music` / `stop music` drive the hidden music player (components/music-player.tsx).
+def('play', {
+  help: '',
+  hidden: true,
+  run: ({ args, out, err }) => {
+    if (args.join(' ').toLowerCase() !== 'music') {
+      err('play: command not found')
+      return 127
+    }
+    window.dispatchEvent(new Event('play-music'))
+    out([s('♪ ', 'accent'), s('now playing. Type `stop music` to stop.', 'muted')])
+  },
+})
+def('stop', {
+  help: '',
+  hidden: true,
+  run: ({ args, out, err }) => {
+    if (args.join(' ').toLowerCase() !== 'music') {
+      err('stop: command not found')
+      return 127
+    }
+    window.dispatchEvent(new Event('stop-music'))
+    out([s('♪ ', 'accent'), s('music stopped.', 'muted')])
+  },
+})

@@ -10,7 +10,7 @@ export const site = {
     'Full-stack engineer shipping production web apps with Laravel, Next.js and NestJS on AWS — from the database schema to the deploy pipeline.',
   yearsExperience: 3, // TODO(real-data): set your actual years of experience
   stack: ['PHP / Laravel', 'Next.js / TypeScript', 'NestJS', 'PostgreSQL', 'Redis', 'AWS (incl. Bedrock)'],
-  currentlyBuilding: 'more privacy-first tools that run entirely in the browser', // TODO(real-data)
+  currentlyBuilding: 'an AI tool that removes background noise from videos',
   availability: 'Open to freelance & contract work',
   email: 'devendra.hamal058@gmail.com',
   github: 'Devendra000',
@@ -23,6 +23,15 @@ export const links = {
   github: `https://github.com/${site.github}`,
   linkedin: `https://www.linkedin.com/in/${site.linkedin}`,
 }
+
+// Organizations I've worked at as part of the team (from my LinkedIn), newest first.
+export const employers = [
+  { name: 'Binary Labs', years: '2026 – now' },
+  { name: 'E-Signature Pvt. Ltd.', years: '2025' },
+  { name: 'Midas Health Services', years: '2025' },
+  { name: 'RPA Nepal', years: '2024' },
+  { name: 'Intopros Technologies', years: '2024' },
+]
 
 export type CaseStudy = {
   slug: string
