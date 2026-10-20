@@ -1,50 +1,64 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { JetBrains_Mono } from 'next/font/google'
+import { Inter, JetBrains_Mono } from 'next/font/google'
+import { CommandPalette } from '@/components/site/command-palette'
+import { site } from '@/lib/site-config'
 import './globals.css'
 
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
+  variable: '--font-jetbrains',
 })
 
 export const metadata: Metadata = {
-  title: 'Devendra Hamal | Full-Stack Developer',
-  description: 'Full-Stack Developer portfolio · PHP, Laravel, Next.js, NestJS, AWS',
-  generator: 'v0.app',
+  metadataBase: new URL(site.url),
+  title: {
+    default: `${site.name} — ${site.tagline}`,
+    template: `%s · ${site.name}`,
+  },
+  description: `${site.role}. ${site.intro}`,
+  openGraph: {
+    title: `${site.name} — ${site.tagline}`,
+    description: site.intro,
+    type: 'website',
+  },
   icons: {
     icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
+      { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },
+      { url: '/icon-dark-32x32.png', media: '(prefers-color-scheme: dark)' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
     ],
     apple: '/apple-icon.png',
   },
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'dark',
-  themeColor: [{ media: '(prefers-color-scheme: dark)', color: '#0d1117' }],
+  themeColor: [
+    { media: '(prefers-color-scheme: dark)', color: '#0a0d12' },
+    { media: '(prefers-color-scheme: light)', color: '#f6f7f9' },
+  ],
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+// Runs before paint so the saved theme never flashes. Dark is the default.
+const themeScript = `try{var t=localStorage.getItem('theme');document.documentElement.dataset.theme=t==='light'?'light':'dark'}catch(e){document.documentElement.dataset.theme='dark'}`
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="bg-gray-950">
-      <body className={`${jetbrainsMono.className} antialiased`}>
+    <html lang="en" data-theme="dark" suppressHydrationWarning className={`${inter.variable} ${jetbrainsMono.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-accent-ink"
+        >
+          Skip to content
+        </a>
         {children}
+        <CommandPalette />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
