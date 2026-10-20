@@ -5,7 +5,8 @@ export const dynamic = 'force-dynamic'
 
 export function GET() {
   return NextResponse.json(
-    { status: 'ok', time: new Date().toISOString() },
+    // VERCEL_REGION is only set at runtime, so the dashboard reads it from here.
+    { status: 'ok', time: new Date().toISOString(), region: process.env.VERCEL_REGION ?? null },
     { headers: { 'Cache-Control': 'no-store' } },
   )
 }

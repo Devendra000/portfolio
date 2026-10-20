@@ -5,7 +5,6 @@ import { Footer } from '@/components/site/footer'
 import { Header } from '@/components/site/header'
 import { Hero } from '@/components/site/hero'
 import { StatusDashboard } from '@/components/site/status-dashboard'
-import { Testimonials } from '@/components/site/testimonials'
 
 export default function Home() {
   return (
@@ -18,7 +17,6 @@ export default function Home() {
           <StatusDashboard />
           <CaseStudies />
           <About />
-          <Testimonials />
           <Contact />
         </div>
       </main>

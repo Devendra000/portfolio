@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { site } from '@/lib/site-config'
 
 /* =============================================================================
    Metrics for the "Live system" dashboard.
@@ -44,7 +43,7 @@ const SAMPLE_INTERVAL_MS = 5000
 const MAX_SAMPLES = 24
 
 async function ping(): Promise<number | null> {
-  for (const url of ['/api/health', '/icon.svg']) {
+  for (const url of ['/api/health', '/favicon.ico']) {
     try {
       const start = performance.now()
       const res = await fetch(`${url}?t=${Date.now()}`, { cache: 'no-store' })
@@ -96,80 +95,19 @@ export function useResponseTimes() {
 export const deploy = {
   time: process.env.NEXT_PUBLIC_BUILD_TIME ?? null,
   sha: process.env.NEXT_PUBLIC_COMMIT_SHA || null,
+  env: process.env.NEXT_PUBLIC_DEPLOY_ENV || null,
 }
 
-/* ---------- Latest GitHub commit -------------------------------------------- */
-
-export type Commit = { message: string; repo: string; url: string; date: string; sha: string }
-type CommitState =
-  | { status: 'loading' }
-  | { status: 'ok'; commit: Commit }
-  | { status: 'error'; reason: 'rate-limited' | 'no-activity' | 'network' }
-
-const CACHE_KEY = 'gh-latest-commit'
-const CACHE_TTL_MS = 10 * 60 * 1000
-
-// REAL: GitHub public API, unauthenticated (60 requests/hour per visitor IP).
-// The events feed no longer includes commit messages, so we take the newest
-// PushEvent's head SHA and look the commit up. Cached in sessionStorage for
-// 10 minutes so navigating around doesn't burn the rate limit.
-export function useLatestCommit(): CommitState {
-  const [state, setState] = useState<CommitState>({ status: 'loading' })
-
+// REAL: the Vercel region serving /api/health. Null off Vercel or on error.
+export function useServingRegion() {
+  const [region, setRegion] = useState<string | null>(null)
   useEffect(() => {
-    let cancelled = false
-    try {
-      const cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) ?? 'null')
-      if (cached && Date.now() - cached.at < CACHE_TTL_MS) {
-        setState({ status: 'ok', commit: cached.commit })
-        return
-      }
-    } catch {
-      /* storage unavailable — just fetch */
-    }
-
-    ;(async () => {
-      try {
-        const evRes = await fetch(`https://api.github.com/users/${site.github}/events/public?per_page=30`)
-        if (evRes.status === 403 || evRes.status === 429) throw new Error('rate-limited')
-        if (!evRes.ok) throw new Error('network')
-        const events: any[] = await evRes.json()
-        const push = events.find((e) => e.type === 'PushEvent' && e.payload?.head)
-        if (!push) throw new Error('no-activity')
-
-        const cRes = await fetch(`https://api.github.com/repos/${push.repo.name}/commits/${push.payload.head}`)
-        if (cRes.status === 403 || cRes.status === 429) throw new Error('rate-limited')
-        if (!cRes.ok) throw new Error('network')
-        const c = await cRes.json()
-
-        const commit: Commit = {
-          message: String(c.commit?.message ?? '').split('\n')[0],
-          repo: push.repo.name,
-          url: c.html_url,
-          date: c.commit?.author?.date ?? push.created_at,
-          sha: String(c.sha).slice(0, 7),
-        }
-        if (cancelled) return
-        setState({ status: 'ok', commit })
-        try {
-          sessionStorage.setItem(CACHE_KEY, JSON.stringify({ at: Date.now(), commit }))
-        } catch {}
-      } catch (err) {
-        if (cancelled) return
-        const reason = (err as Error).message
-        setState({
-          status: 'error',
-          reason: reason === 'rate-limited' || reason === 'no-activity' ? reason : 'network',
-        })
-      }
-    })()
-
-    return () => {
-      cancelled = true
-    }
+    fetch('/api/health', { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => setRegion(typeof d?.region === 'string' ? d.region : null))
+      .catch(() => {})
   }, [])
-
-  return state
+  return region
 }
 
 /* ---------- Helpers --------------------------------------------------------- */

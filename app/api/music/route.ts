@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 
+// Built once at build time: on Vercel, public/ isn't on the function's disk at runtime.
+export const dynamic = 'force-static'
+
 export async function GET() {
   try {
     const musicDir = path.join(process.cwd(), 'public', 'music')

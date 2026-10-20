@@ -78,9 +78,3 @@ export const AlertIcon = (p: P) => (
     <path d="M12 9v4M12 17h.01" />
   </svg>
 )
-export const CommitIcon = (p: P) => (
-  <svg {...base} {...p}>
-    <circle cx="12" cy="12" r="3" />
-    <path d="M3 12h6M15 12h6" />
-  </svg>
-)

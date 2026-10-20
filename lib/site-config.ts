@@ -186,30 +186,10 @@ export const caseStudies: CaseStudy[] = [
   },
 ]
 
-export type Testimonial = { quote: string; name: string; title: string }
-
-// TODO(real-data): replace with real client quotes (with their permission).
-// Keep `isPlaceholder` true until you do — the UI labels them as placeholders.
-export const testimonials: (Testimonial & { isPlaceholder?: boolean })[] = [
-  {
-    quote: 'Your client quote goes here — what problem you solved and what it was like to work with you.',
-    name: 'Client Name',
-    title: 'Founder, Company',
-    isPlaceholder: true,
-  },
-  {
-    quote: 'A second quote — ideally one that mentions reliability, communication or a concrete result.',
-    name: 'Client Name',
-    title: 'CTO, Company',
-    isPlaceholder: true,
-  },
-]
-
 export const sections = [
   { id: 'top', label: 'Home' },
   { id: 'system', label: 'Live system' },
   { id: 'work', label: 'Case studies' },
   { id: 'about', label: 'About' },
-  { id: 'testimonials', label: 'Testimonials' },
   { id: 'contact', label: 'Contact' },
 ] as const

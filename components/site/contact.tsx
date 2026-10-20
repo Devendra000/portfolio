@@ -54,7 +54,7 @@ export function Contact() {
     <section id="contact" aria-labelledby="contact-title" className="scroll-mt-20">
       <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr]">
         <div>
-          <SectionHeading id="contact-title" eyebrow="05 · contact" title="Open a ticket.">
+          <SectionHeading id="contact-title" eyebrow="04 · contact" title="Open a ticket.">
             Tell me what you’re building and where it hurts. I’ll reply with honest next steps — even if that’s “you
             don’t need me yet”.
           </SectionHeading>

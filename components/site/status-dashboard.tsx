@@ -1,10 +1,9 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { deploy, getSimulatedUptime, timeAgo, useLatestCommit, useResponseTimes } from '@/lib/metrics'
-import { links, site } from '@/lib/site-config'
+import { deploy, getSimulatedUptime, timeAgo, useResponseTimes, useServingRegion } from '@/lib/metrics'
 import { ArchitectureDiagram } from './architecture-diagram'
-import { CheckIcon, CommitIcon, ExternalIcon } from './icons'
+import { CheckIcon } from './icons'
 
 function Panel({ title, tag, children, className = '' }: { title: string; tag?: string; children: React.ReactNode; className?: string }) {
   return (
@@ -131,6 +130,7 @@ function ResponsePanel() {
 function DeployPanel() {
   // Render relative time on the client only to avoid hydration mismatches.
   const [ago, setAgo] = useState<string | null>(null)
+  const region = useServingRegion()
   useEffect(() => {
     const update = () => setAgo(timeAgo(deploy.time))
     update()
@@ -139,7 +139,7 @@ function DeployPanel() {
   }, [])
 
   return (
-    <Panel title="Last deploy">
+    <Panel title="Last deploy" className="sm:col-span-2 lg:col-span-1">
       <p className="font-mono text-3xl font-medium text-ink">{ago ?? '—'}</p>
       <dl className="mt-4 space-y-1 font-mono text-xs">
         <div className="flex justify-between gap-2">
@@ -147,65 +147,16 @@ function DeployPanel() {
           <dd className="text-ink-2">{deploy.time ? new Date(deploy.time).toUTCString().slice(5, 22) + ' UTC' : 'unknown'}</dd>
         </div>
         <div className="flex justify-between gap-2">
-          <dt className="text-ink-muted">commit</dt>
-          <dd className="text-ink-2">{deploy.sha ?? 'local build'}</dd>
+          <dt className="text-ink-muted">env</dt>
+          <dd className="text-ink-2">{deploy.env ?? 'local'}</dd>
         </div>
-        <div className="flex justify-between gap-2">
-          <dt className="text-ink-muted">region</dt>
-          {/* SIMULATED: set to your hosting region, or read VERCEL_REGION at build time. */}
-          <dd className="text-ink-2">global edge</dd>
-        </div>
+        {region && (
+          <div className="flex justify-between gap-2">
+            <dt className="text-ink-muted">region</dt>
+            <dd className="text-ink-2">{region}</dd>
+          </div>
+        )}
       </dl>
-    </Panel>
-  )
-}
-
-/* ---------- Latest commit ---------- */
-
-function CommitPanel() {
-  const state = useLatestCommit()
-  const [ago, setAgo] = useState<string | null>(null)
-  useEffect(() => {
-    if (state.status === 'ok') setAgo(timeAgo(state.commit.date))
-  }, [state])
-
-  return (
-    <Panel title="Latest commit" tag="github api">
-      {state.status === 'loading' && (
-        <div className="space-y-2" aria-label="Loading latest commit">
-          <div className="h-5 w-4/5 animate-pulse rounded bg-surface-2" />
-          <div className="h-4 w-1/2 animate-pulse rounded bg-surface-2" />
-        </div>
-      )}
-      {state.status === 'ok' && (
-        <a href={state.commit.url} target="_blank" rel="noopener noreferrer" className="group block">
-          <p className="line-clamp-2 font-mono text-sm text-ink group-hover:text-accent">
-            <CommitIcon className="mr-1.5 inline -translate-y-px text-accent" />
-            {state.commit.message || '(no message)'}
-          </p>
-          <p className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-ink-muted">
-            <span className="truncate">{state.commit.repo.split('/')[1]}</span>
-            <span>{state.commit.sha}</span>
-            <span>{ago}</span>
-            <ExternalIcon className="size-3" />
-          </p>
-        </a>
-      )}
-      {state.status === 'error' && (
-        // Graceful fallback: never a broken widget.
-        <div>
-          <p className="text-sm text-ink-2">
-            {state.reason === 'rate-limited'
-              ? 'GitHub’s API rate limit was reached for your network. Commits are still happening, promise.'
-              : state.reason === 'no-activity'
-                ? 'No recent public pushes — probably heads-down on client work.'
-                : 'Couldn’t reach GitHub right now.'}
-          </p>
-          <a href={links.github} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1.5 font-mono text-xs text-accent hover:underline">
-            github.com/{site.github} <ExternalIcon className="size-3" />
-          </a>
-        </div>
-      )}
     </Panel>
   )
 }
@@ -222,7 +173,7 @@ export function StatusDashboard() {
             This site is a running system.
           </h2>
           <p className="mt-3 max-w-xl text-ink-2">
-            The same things I watch on client projects: uptime, latency, deploys and what changed last.
+            The same things I watch on client projects: uptime, latency and deploys.
           </p>
         </div>
         <p className="inline-flex items-center gap-2 self-start rounded-full border border-line bg-surface px-3 py-1.5 font-mono text-xs text-ink-2 sm:self-auto">
@@ -230,12 +181,11 @@ export function StatusDashboard() {
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <UptimePanel />
         <ResponsePanel />
         <DeployPanel />
-        <CommitPanel />
-        <Panel title="Request flow" tag="simulated traffic" className="sm:col-span-2 lg:col-span-4">
+        <Panel title="Request flow" tag="simulated traffic" className="sm:col-span-2 lg:col-span-3">
           <ArchitectureDiagram />
         </Panel>
       </div>

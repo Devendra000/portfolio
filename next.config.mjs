@@ -11,6 +11,7 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_BUILD_TIME: new Date().toISOString(),
     NEXT_PUBLIC_COMMIT_SHA: (process.env.VERCEL_GIT_COMMIT_SHA || '').slice(0, 7),
+    NEXT_PUBLIC_DEPLOY_ENV: process.env.VERCEL_ENV || '',
   },
 }
 
