@@ -155,7 +155,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     rebuild:
       "I'd start with a proper background-job queue for notifications and grading instead of bolting it on, and I'd design the progress-event schema with analytics exports in mind from day one.",
-    demo: 'https://www.prepmate.tech',
+    demo: 'https://prepmate.devendrahamal.com.np',
   },
   {
     slug: 'chatmandu',
