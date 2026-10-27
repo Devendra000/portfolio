@@ -5,10 +5,6 @@ import { links, site } from '@/lib/site-config'
 import { GitHubIcon, LinkedInIcon, MailIcon } from './icons'
 import { SectionHeading } from './section-heading'
 
-// Set NEXT_PUBLIC_FORMSPREE_ID (free at formspree.io) to receive submissions by
-// email. Without it, the form falls back to opening the visitor's mail client.
-const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID
-
 type Status = { kind: 'idle' | 'sending' | 'sent' | 'error'; message?: string }
 
 const fieldClass =
@@ -22,18 +18,12 @@ export function Contact() {
     const form = e.currentTarget
     const data = Object.fromEntries(new FormData(form)) as Record<string, string>
 
-    if (!FORMSPREE_ID) {
-      const body = `${data.message}\n\n— ${data.name} (${data.email})`
-      window.location.href = `${links.email}?subject=${encodeURIComponent(`[${data.topic}] from ${data.name}`)}&body=${encodeURIComponent(body)}`
-      setStatus({ kind: 'sent', message: 'Opening your email app… if nothing happens, email me directly below.' })
-      return
-    }
-
     setStatus({ kind: 'sending' })
     try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      // Sent server-side via /api/contact (Resend) — no mail client needed.
+      const res = await fetch('/api/contact', {
         method: 'POST',
-        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       })
       if (!res.ok) throw new Error()
@@ -77,6 +67,8 @@ export function Contact() {
         </div>
 
         <form onSubmit={onSubmit} className="rounded-xl border border-line bg-surface p-6">
+          {/* Honeypot: hidden from people, bots fill it and get silently dropped. */}
+          <input name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="block text-sm font-medium text-ink-2">
               Name
