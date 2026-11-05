@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-// Portrait ↔ text on a fixed grid of digits. Nothing moves: when the scene changes, the old
+// Portrait ↔ text on a fixed grid of digits (the cursor pushes them aside). When the scene changes, the old
 // digits are replaced one by one, in a direction that changes each time, by the next scene,
 // revealed only where the old one has gone. The panel is always dark, so colors are fixed rather than theme tokens.
 const INK = '#e6edf3'
@@ -183,6 +183,13 @@ export function PortraitMorph({
     let delay = new Float32Array(0)
     let done = new Uint8Array(0) // 1 once a cell has been replaced
     let flash = new Float32Array(0)
+    // Cursor push: per-cell offset and velocity, springing back to the grid spot.
+    let ox = new Float32Array(0)
+    let oy = new Float32Array(0)
+    let vx = new Float32Array(0)
+    let vy = new Float32Array(0)
+    let mx = -1e4
+    let my = -1e4
     let glyph = new Uint8Array(0)
     let bit = new Uint8Array(0)
 
@@ -205,6 +212,10 @@ export function PortraitMorph({
       delay = new Float32Array(n)
       done = new Uint8Array(n)
       flash = new Float32Array(n)
+      ox = new Float32Array(n)
+      oy = new Float32Array(n)
+      vx = new Float32Array(n)
+      vy = new Float32Array(n)
       bit = Uint8Array.from({ length: n }, () => (Math.random() < 0.5 ? 0 : 1))
       glyph = bit.slice()
 
@@ -281,6 +292,31 @@ export function PortraitMorph({
         else flash[i] = 0
       }
 
+      // Cursor repulsion with a spring back to rest.
+      const R = W * 0.14
+      const R2 = R * R
+      const k = 70
+      const damp = Math.exp(-dt * 9)
+      for (let i = 0; i < a.length; i++) {
+        if (a[i] < 0.01) continue
+        const ddx = ((i % cols) + 0.5) * cell + ox[i] - mx
+        const ddy = (Math.floor(i / cols) + 0.5) * cell + oy[i] - my
+        const d2 = ddx * ddx + ddy * ddy
+        if (d2 < R2) {
+          const d = Math.sqrt(d2) || 1
+          const f = (1 - d / R) * W * 9 * dt
+          vx[i] += (ddx / d) * f
+          vy[i] += (ddy / d) * f
+        }
+        if (ox[i] || oy[i] || vx[i] || vy[i]) {
+          vx[i] = (vx[i] - ox[i] * k * dt) * damp
+          vy[i] = (vy[i] - oy[i] * k * dt) * damp
+          ox[i] += vx[i] * dt
+          oy[i] += vy[i] * dt
+          if (Math.abs(ox[i]) + Math.abs(oy[i]) + Math.abs(vx[i]) + Math.abs(vy[i]) < 0.01) ox[i] = oy[i] = vx[i] = vy[i] = 0
+        }
+      }
+
       // Idle flicker: a few digits flip, some with a faint green blip.
       if (phase === 'hold') {
         const rate = a.length * dt * 0.03
@@ -300,17 +336,20 @@ export function PortraitMorph({
       ctx.clearRect(0, 0, W, W)
       for (let i = 0; i < a.length; i++) {
         if (a[i] < 0.01) continue
-        const m = Math.min(1, flash[i] * 0.9)
+        // Pushed digits glow green and a little brighter.
+        const push = Math.min(1, (Math.abs(ox[i]) + Math.abs(oy[i])) / (W * 0.04))
+        const m = Math.min(1, flash[i] * 0.9 + push * 0.8)
+        const alpha = Math.min(1, a[i] + push * 0.3)
         const size = s[i] * GLYPH_SCALE
-        const x = ((i % cols) + 0.5) * cell - size / 2
-        const y = (Math.floor(i / cols) + 0.5) * cell - size / 2
+        const x = ((i % cols) + 0.5) * cell + ox[i] - size / 2
+        const y = (Math.floor(i / cols) + 0.5) * cell + oy[i] - size / 2
         const sx = glyph[i] * SPRITE
         if (m < 0.98) {
-          ctx.globalAlpha = a[i] * (1 - m)
+          ctx.globalAlpha = alpha * (1 - m)
           ctx.drawImage(sprites, sx, 0, SPRITE, SPRITE, x, y, size, size)
         }
         if (m > 0.02) {
-          ctx.globalAlpha = Math.min(1, a[i] * m)
+          ctx.globalAlpha = alpha * m
           ctx.drawImage(sprites, sx, SPRITE, SPRITE, SPRITE, x, y, size, size)
         }
       }
@@ -336,9 +375,19 @@ export function PortraitMorph({
       cancelAnimationFrame(raf)
     }
 
+    const onMove = (e: PointerEvent) => {
+      const r = canvas.getBoundingClientRect()
+      mx = e.clientX - r.left
+      my = e.clientY - r.top
+    }
+    const onLeave = () => {
+      mx = my = -1e4
+    }
     const onClick = () => {
       if (phase === 'hold') holdLeft = 0
     }
+    wrap.addEventListener('pointermove', onMove)
+    wrap.addEventListener('pointerleave', onLeave)
     wrap.addEventListener('click', onClick)
 
     const io = new IntersectionObserver(([entry]) => (entry.isIntersecting ? start() : stop()), { threshold: 0.05 })
@@ -376,6 +425,8 @@ export function PortraitMorph({
       io.disconnect()
       ro.disconnect()
       window.clearTimeout(resizeTimer)
+      wrap.removeEventListener('pointermove', onMove)
+      wrap.removeEventListener('pointerleave', onLeave)
       wrap.removeEventListener('click', onClick)
     }
   }, [src, wordsKey])
