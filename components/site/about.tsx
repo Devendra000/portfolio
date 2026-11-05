@@ -1,4 +1,5 @@
 import { employers, site } from '@/lib/site-config'
+import { PortraitMorph } from './portrait-morph'
 import { SectionHeading } from './section-heading'
 
 export function About() {
@@ -39,21 +40,10 @@ export function About() {
         </div>
 
         <div className="overflow-hidden rounded-xl border border-line bg-surface font-mono text-sm">
-          {/* Portrait: background cut out so it sits on the theme instead of a white box. */}
-          <figure className="bg-grid relative aspect-square overflow-hidden border-b border-line bg-surface-2">
-            <div
-              className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,var(--accent-soft),transparent_65%)]"
-              aria-hidden
-            />
-            <img
-              src="/profile.webp"
-              alt={`Portrait of ${site.name}`}
-              width={600}
-              height={600}
-              decoding="async"
-              className="absolute inset-0 h-full w-full object-contain object-bottom"
-            />
-            <figcaption className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-surface via-surface/80 to-transparent px-4 pb-3 pt-8 text-xs">
+          {/* Portrait: morphs into short phrases about me and back (static image with reduced motion). */}
+          <figure className="relative aspect-square overflow-hidden border-b border-line bg-[#0a0d12]">
+            <PortraitMorph src="/devendra-hamal-1-0.png" alt={`Portrait of ${site.name}`} />
+            <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-surface via-surface/80 to-transparent px-4 pb-3 pt-8 text-xs">
               <span className="text-ink">{site.name.toLowerCase()}</span>
               <span className="text-ink-muted">{site.location.toLowerCase()}</span>
             </figcaption>
