@@ -88,38 +88,47 @@ export const caseStudies: CaseStudy[] = [
     demo: 'https://www.generateqr.tech',
   },
   {
-    slug: 'image-converter',
-    name: 'ImageConverter',
-    summary: 'Convert images between JPEG, PNG, WebP, GIF, TIFF and AVIF in seconds. Free, no registration, files never stored.',
+    slug: 'unek',
+    name: 'unEk',
+    summary:
+      'A free, private toolkit of 12 PDF, Word and image tools. Convert, merge, split, compress and watermark files, and chain tools together without re-uploading. Most of it runs in your browser.',
     status: 'live',
-    year: '2026', // TODO(real-data): confirm launch year
+    year: '2026',
     problem:
-      'Converting a PNG to WebP (or back) should take five seconds, but most converters bury it under sign-ups, upload limits, ads and unclear policies on what happens to your files.',
-    role: ['Solo build: design, development, deployment'],
-    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Vercel'], // TODO(real-data): add the image-processing library you used
+      'Real file work is a chain: merge two PDFs, shrink the result for email, number the pages, send it. Free tools online each handle one step, behind sign-ups, upload limits, ads and unclear privacy, and you download and re-upload between every step. unEk started as a single image converter and grew into one place for the whole job.',
+    role: ['Solo build: product, UI/UX design, front end, PDF & image processing, testing, deployment'],
+    stack: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS v4', 'pdf.js', 'pdf-lib', 'sharp', 'Playwright'],
     decisions: [
       {
-        decision: 'Process and return, never store',
+        decision: 'Process in the browser by default',
         tradeoff:
-          'Images are converted and handed straight back. No storage means no privacy risk and no cleanup jobs, but also no “recent files” or batch history.',
+          'PDF and Word tools run client-side with pdf.js and pdf-lib, so files never touch a server and hosting costs stay near zero. Heavy jobs depend on the user’s device, and image work stays on a small sharp server route because its AVIF encoder beats canvas. Each tool page says which kind it is.',
       },
       {
-        decision: 'One flow: upload → pick format → download',
-        tradeoff: 'Dead simple for 95% of users. Power options like resizing or metadata stripping are deliberately left out of the main path.',
+        decision: 'Write a PDF content-stream parser instead of pulling in a library',
+        tradeoff:
+          'Watermark removal has to cut out specific drawing instructions and leave every other byte untouched. The parser tracks transparency and rotation through the drawing state to tell a see-through “CONFIDENTIAL” from real content. Watermarks baked into scanned images can’t be separated, and the tool says so.',
       },
       {
-        decision: 'Sensible per-format defaults',
-        tradeoff: 'Lossy formats (WebP, AVIF) get a tuned quality default so results look right without settings. Some users would like a slider.',
+        decision: 'Chain tools instead of building a mega-editor',
+        tradeoff:
+          'Each tool stays focused and hands its output to the next one in memory, so Merge → Compress → Page numbers is three clicks and zero uploads. The cost is fewer options per page, with inline extras only where they fit.',
+      },
+      {
+        decision: 'Test in a real browser, not just the type checker',
+        tradeoff:
+          'Builds and type checks missed real bugs like a server/client boundary crash. Playwright tests now upload real files and check the downloaded output (page counts, text, dimensions, that a watermark is really gone), at the cost of a slower suite.',
       },
     ],
     results: [
-      { metric: '6', label: 'formats: JPEG, PNG, WebP, GIF, TIFF, AVIF' },
-      { metric: '50 MB', label: 'max file size' },
-      { metric: '0', label: 'accounts needed or files stored' },
+      { metric: '12', label: 'working PDF, Word and image tools' },
+      { metric: '9 of 12', label: 'tools run fully in your browser' },
+      { metric: '68', label: 'end-to-end tests in real Chromium' },
     ],
     rebuild:
-      "I'd add batch conversion with a zip download, and move the heavy encoders into a Web Worker so large files never block the UI.",
-    demo: 'https://ic.devendrahamal.com.np',
+      "I'd move background removal and large compression jobs into Web Workers so big files never stutter the page, add OCR so PDF → Word works on scans, and ship it as an installable PWA so the in-browser tools work offline.",
+    demo: 'https://unek.devendrahamal.com.np',
+    repo: 'https://github.com/Devendra000/image-converter',
   },
   {
     slug: 'prepmate',

@@ -5,8 +5,7 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
-  },
-  // Real "last deploy" value: stamped at build time. On Vercel the commit SHA is
+  },  // Real "last deploy" value: stamped at build time. On Vercel the commit SHA is
   // also available, so the dashboard can show which commit is live.
   env: {
     NEXT_PUBLIC_BUILD_TIME: new Date().toISOString(),

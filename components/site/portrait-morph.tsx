@@ -202,7 +202,8 @@ export function PortraitMorph({
       canvas.height = Math.round(W * dpr)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
 
-      cols = clamp(Math.round(W / 5), 56, 110)
+      // ~5px cells on wide panels; narrow (mobile) panels keep at least 96 columns so the digits stay dense.
+      cols = clamp(Math.round(W / 5), 96, 110)
       cell = W / cols
       scenes = [samplePortrait(img, cols, cell), ...lines.map((l) => sampleText(l, cols, cell, family))]
 
