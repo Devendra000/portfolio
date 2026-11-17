@@ -34,38 +34,136 @@ const ORG_PATTERNS: [Organization, RegExp][] = [
   ['RBB', /rbb\.com\.np|rastriya\s*banijya|राष्ट्रिय\s*वाणिज्य/i],
   ['ADBL', /adbl|agricultural\s*development\s*bank|कृषि\s*विकास\s*बैंक/i],
   ['NBL', /nepal\s*bank\s*l|nbl\.com\.np|नेपाल\s*बैंक/i],
-  ['NTC', /ntc\.net\.np|nepal\s*telecom|नेपाल\s*टेलिकम/i],
+  ['NTC', /ntc\.net\.np|nepal\s*telecom|नेपाल\s*टेलिकम|टेलिकम\s*इन्जिनियर|telecom\s*engineer/i],
   ['NEA', /nea\.org\.np|electricity\s*authority|विद्युत\s*प्राधिकरण/i],
 ]
 
-// Common post titles → English. Longest phrases first so "सहायक निर्देशक"
-// wins over "सहायक". Unknown words stay in Nepali.
+// Common post / service terms → English. Sorted longest-first below so
+// "सहायक निर्देशक" wins over "सहायक". Whatever is left is romanised.
 const TERMS: [string, string][] = [
   ['सहायक निर्देशक', 'Assistant Director'],
   ['उप निर्देशक', 'Deputy Director'],
   ['उपनिर्देशक', 'Deputy Director'],
+  ['कार्यकारी निर्देशक', 'Executive Director'],
   ['निर्देशक', 'Director'],
   ['सहायक प्रबन्धक', 'Assistant Manager'],
+  ['उप प्रबन्धक', 'Deputy Manager'],
   ['प्रबन्धक', 'Manager'],
+  ['शाखा अधिकृत', 'Section Officer'],
   ['अधिकृत', 'Officer'],
+  ['सहसचिव', 'Joint Secretary'],
+  ['उपसचिव', 'Under Secretary'],
+  ['सचिव', 'Secretary'],
   ['सहायक', 'Assistant'],
+  ['वरिष्ठ', 'Senior'],
+  ['कनिष्ठ', 'Junior'],
+  ['सिनियर', 'Senior'],
+  ['जुनियर', 'Junior'],
+  ['प्रमुख', 'Chief'],
   ['सूचना प्रविधि', 'Information Technology'],
   ['कम्प्युटर इन्जिनियर', 'Computer Engineer'],
+  ['कम्प्युटर अपरेटर', 'Computer Operator'],
   ['कम्प्युटर', 'Computer'],
+  ['इन्जिनियरिङ', 'Engineering'],
   ['इन्जिनियर', 'Engineer'],
+  ['सिभिल', 'Civil'],
+  ['इलेक्ट्रिकल', 'Electrical'],
+  ['मेकानिकल', 'Mechanical'],
+  ['प्राविधिक', 'Technical'],
+  ['प्रविधिक', 'Technical'],
+  ['टेलिकम', 'Telecom'],
+  ['अप्राविधिक', 'Non-technical'],
+  ['प्रशासनिक', 'Administrative'],
   ['प्रशासन', 'Administration'],
+  ['लेखापाल', 'Accountant'],
+  ['लेखा परीक्षण', 'Audit'],
   ['लेखा', 'Accounts'],
+  ['तथ्याङ्क', 'Statistics'],
+  ['अर्थशास्त्र', 'Economics'],
+  ['बैंकिङ', 'Banking'],
   ['कानून', 'Law'],
   ['नेपाल', 'Nepal'],
   ['विविध', 'Miscellaneous'],
-  ['इन्जिनियरिङ', 'Engineering'],
   ['न्याय', 'Judicial'],
   ['परराष्ट्र', 'Foreign Affairs'],
   ['शिक्षा', 'Education'],
   ['स्वास्थ्य', 'Health'],
+  ['कृषि', 'Agriculture'],
+  ['वन', 'Forest'],
+  ['सामान्य', 'General'],
+  ['उपसमूह', 'Sub-group'],
+  ['समूह', 'Group'],
+  ['खुला', 'Open'],
+  ['महिला', 'Women'],
   ['सेवा', 'Service'],
+  ['तह', 'Level'],
+  ['श्रेणी', 'Class'],
+  ['प्रथम', 'First'],
+  ['द्वितीय', 'Second'],
+  ['तृतीय', 'Third'],
 ]
-const translatePost = (s: string) => TERMS.reduce((acc, [np, en]) => acc.split(np).join(en), s).replace(/\s+/g, ' ').trim()
+TERMS.sort((a, b) => b[0].length - a[0].length)
+
+// Nepali ordinals used for levels: "छैठौं तह" → 6.
+const ORDINALS: [RegExp, number][] = [
+  [/पहिलो/, 1], [/दोस्रो/, 2], [/तेस्रो/, 3], [/चौथो/, 4], [/पाँचौ[ंँ]?/, 5], [/छैटौ[ंँ]?|छैठौ[ंँ]?/, 6],
+  [/सातौ[ंँ]?/, 7], [/आठौ[ंँ]?/, 8], [/नवौ[ंँ]?/, 9], [/दशौ[ंँ]?/, 10], [/एघारौ[ंँ]?/, 11], [/बाह्रौ[ंँ]?/, 12],
+]
+
+// ---- Devanagari → Roman letters (for words not in TERMS) -------------------
+const CONS: Record<string, string> = {
+  क: 'k', ख: 'kh', ग: 'g', घ: 'gh', ङ: 'ng', च: 'ch', छ: 'chh', ज: 'j', झ: 'jh', ञ: 'ny',
+  ट: 't', ठ: 'th', ड: 'd', ढ: 'dh', ण: 'n', त: 't', थ: 'th', द: 'd', ध: 'dh', न: 'n',
+  प: 'p', फ: 'ph', ब: 'b', भ: 'bh', म: 'm', य: 'y', र: 'r', ल: 'l', व: 'w',
+  श: 'sh', ष: 'sh', स: 's', ह: 'h',
+}
+const VOWELS: Record<string, string> = { अ: 'a', आ: 'aa', इ: 'i', ई: 'i', उ: 'u', ऊ: 'u', ऋ: 'ri', ए: 'e', ऐ: 'ai', ओ: 'o', औ: 'au' }
+const MATRAS: Record<string, string> = { 'ा': 'a', 'ि': 'i', 'ी': 'i', 'ु': 'u', 'ू': 'u', 'ृ': 'ri', 'े': 'e', 'ै': 'ai', 'ो': 'o', 'ौ': 'au' }
+const SIGNS: Record<string, string> = { 'ं': 'n', 'ँ': 'n', 'ः': 'h', '।': '.', '॥': '.' }
+const VIRAMA = '्'
+
+/** Romanise one Devanagari word, Nepali-style: "खरिदार" → "Kharidar", "मन्त्रालय" → "Mantralaya". */
+function romaniseWord(w: string): string {
+  let out = ''
+  let pending = false // consonant waiting for its inherent "a"
+  let conjunct = false // last consonant was joined to the previous one by a virama
+  let sawVirama = false
+  for (const ch of w) {
+    if (CONS[ch]) {
+      if (pending) out += 'a'
+      conjunct = sawVirama
+      sawVirama = false
+      out += CONS[ch]
+      pending = true
+    } else if (ch === VIRAMA) {
+      pending = false
+      sawVirama = true
+    } else {
+      sawVirama = false
+      if (MATRAS[ch] !== undefined) out += MATRAS[ch]
+      else {
+        if (pending) out += 'a'
+        out += VOWELS[ch] ?? SIGNS[ch] ?? (ch === '़' ? '' : ch)
+      }
+      pending = false
+    }
+  }
+  // Nepali drops the final inherent vowel ("राम" → "Ram") except after a conjunct ("पत्र" → "Patra").
+  if (pending && (conjunct || out.length <= 2)) out += 'a'
+  return out ? out[0].toUpperCase() + out.slice(1) : out
+}
+const romanise = (s: string) => s.replace(/[ऀ-ॿ]+/g, romaniseWord)
+
+/** Known terms → English, everything else → Roman letters. Output never contains Devanagari. */
+function toEnglish(s: string): string {
+  const translated = TERMS.reduce((acc, [np, en]) => acc.split(np).join(` ${en} `), toAscii(s))
+  return romanise(translated)
+    .replace(/\s+/g, ' ')
+    .replace(/\(\s+/g, '(')
+    .replace(/\s+([),.:])/g, '$1')
+    .trim()
+}
+const translatePost = toEnglish
 
 const pad = (n: string) => n.padStart(2, '0')
 
@@ -105,14 +203,19 @@ export function extractFromText(raw: string): Extracted {
   // Position — "पद : सहायक निर्देशक (सूचना प्रविधि)" or "Post: Assistant"
   const post =
     text.match(/(?:^|\s)पद\s*[:：]\s*(.+?)(?=\s+(?:विज्ञापन|बिज्ञापन|तह|श्रेणी)|\n|$)/m)?.[1] ??
+    text.match(/^\s*पद\s+(.+?)\s*$/m)?.[1] ?? // table layout without a colon (NTC)
     text.match(/\b(?:Post|Position|Designation)\s*(?:Name)?\s*[:：]\s*(.+?)(?=\s{2,}|\s+Adv|\n|$)/im)?.[1]
   if (post) out.position = translatePost(post).slice(0, 200)
 
   // Level — "Officer Level 6", "छैठौं तह", "Level: 7th"
+  // (\b doesn't work next to Devanagari in JS regex, so use whitespace lookarounds.)
   const level =
-    text.match(/\b(?:Level|तह)\s*[:：]?\s*([\w०-९]+(?:st|nd|rd|th)?)/i)?.[0] ??
-    text.match(/([^\s:]+)\s+तह\b/)?.[0]
-  if (level) out.level = toAscii(level).trim()
+    text.match(/(?:\bLevel|(?<![^\s:(])तह)[ \t]*[:：]?[ \t]*([\w\u0900-\u097F]+(?:st|nd|rd|th)?)/i)?.[1] ??
+    text.match(/([^\s:]+)[ \t]+तह(?![ऀ-ॿ])/)?.[1]
+  if (level) {
+    const n = ORDINALS.find(([re]) => re.test(level))?.[1] ?? toAscii(level).match(/\d+/)?.[0]
+    out.level = n ? `Level ${n}` : toEnglish(level)
+  }
 
   // Advertisement no. — "विज्ञापन नं.: १४/२०८३", "Adv. No: 12/082-83"
   const adv =
@@ -133,6 +236,7 @@ export function extractFromText(raw: string): Extracted {
   // Fee — "परीक्षा दस्तुर 1000.00", "Exam Fee: Rs. 1,000"
   out.fee = amount(
     ascii.match(/परीक्षा\s*दस्तुर\s*[:：]?\s*(?:रु\.?|Rs\.?|NPR)?\s*([\d,]+(?:\.\d+)?)/i)?.[1] ??
+      ascii.match(/सामान्य\s*शुल्क[^\d]{0,120}?([\d,]+(?:\.\d+)?)/)?.[1] ??
       ascii.match(/\b(?:Exam(?:ination)?\s*)?Fee\s*(?:Amount)?\s*[:：]?\s*(?:Rs\.?|NPR)?\s*([\d,]+(?:\.\d+)?)/i)?.[1],
   )
 
@@ -163,13 +267,15 @@ export function extractFromText(raw: string): Extracted {
 
   // Extra references worth keeping → notes
   const notes: string[] = []
-  const appId = ascii.match(/आवेदन\s*आ[ईइ]डी\s*[:：]?\s*(\d+)/)?.[1] ?? ascii.match(/ApplicationID=(\d+)/i)?.[1]
+  const appId =
+    ascii.match(/आवेदन\s*आ[ईइ]डी\s*[:：]?\s*(\d+)/)?.[1] ??
+    ascii.match(/आवेदक\s*न[ंं]?\.?\s*[:：]?\s*(\d+)/)?.[1] ?? ascii.match(/ApplicationID=(\d+)/i)?.[1]
   const candId = ascii.match(/उम्मेदवार\s*आ[ईइ]डी\s*[:：]?\s*(\d+)/)?.[1] ?? ascii.match(/Candidate\s*ID\s*[:：]?\s*(\d+)/i)?.[1]
   const group = text.match(/समावेसी\s*समूह\s*[:：]?\s*([^\s|]+)/)?.[1]
   if (appId) notes.push(`Application ID: ${appId}`)
   if (candId) notes.push(`Candidate ID: ${candId}`)
   const GROUPS: Record<string, string> = { 'खुला': 'Open', 'महिला': 'Women', 'दलित': 'Dalit', 'मधेशी': 'Madhesi', 'आदिवासी': 'Adibasi Janajati', 'अपाङ्ग': 'Disabled', 'पिछडिएको': 'Backward area' }
-  if (group) notes.push(`Group: ${GROUPS[group] ?? group}`)
+  if (group) notes.push(`Group: ${GROUPS[group] ?? toEnglish(group)}`)
   if (notes.length) out.notes = notes.join(' · ')
 
   // Portal link if the address bar made it into the screenshot
