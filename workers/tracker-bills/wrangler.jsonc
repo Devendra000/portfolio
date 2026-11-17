@@ -1,0 +1,16 @@
+// Bill storage for the job application tracker. See src/index.ts.
+// Deploy:   pnpm bills:deploy        (once: wrangler r2 bucket create tracker-bills,
+//                                      wrangler secret put SHARED_SECRET --config workers/tracker-bills/wrangler.jsonc)
+// Local:    pnpm bills:dev           (R2 is simulated on disk; secret from .dev.vars)
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "tracker-bills",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-01",
+  "r2_buckets": [{ "binding": "BILLS", "bucket_name": "tracker-bills" }],
+  "vars": {
+    // Origins allowed to PUT signed uploads from the browser.
+    "ALLOWED_ORIGINS": "https://devendrahamal.com,https://www.devendrahamal.com,http://localhost:3000"
+  },
+  "observability": { "enabled": true }
+}

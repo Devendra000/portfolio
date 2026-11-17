@@ -15,3 +15,7 @@ node_modules
 .next/
 .DS_Store
 *.tsbuildinfo
+
+# Cloudflare Worker local secrets + wrangler state
+.dev.vars
+.wrangler/
